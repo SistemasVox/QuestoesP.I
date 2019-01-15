@@ -32,6 +32,7 @@ public class vwHome extends JFrame {
 	private JScrollPane scrollQ, scrollA, scrollArea;
 	private String [] ae = {"A) ","B) ","C) ","D) ","E) "};
 	private ArrayList<String> listaAlternativas = new ArrayList<String>();
+	private JButton btnSair;
 
 	/**
 	 * Launch the application.
@@ -53,7 +54,7 @@ public class vwHome extends JFrame {
 	 * Create the frame.
 	 */
 	public vwHome() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 937, 722);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -85,7 +86,7 @@ public class vwHome extends JFrame {
 		contentPane.add(this.scrollArea = new JScrollPane(txtArea));
 		scrollArea.setBounds(10, 319, 713, 354);
 		
-		btnSalvar = new JButton("Salvar");
+		btnSalvar = new JButton("Salvar Quest\u00E3o");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				salvar();
@@ -94,7 +95,7 @@ public class vwHome extends JFrame {
 		btnSalvar.setBounds(745, 423, 159, 46);
 		contentPane.add(btnSalvar);
 		
-		btnLimpar = new JButton("Limpar");
+		btnLimpar = new JButton("Limpar Campos");
 		btnLimpar.setBounds(745, 319, 159, 46);
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -121,7 +122,7 @@ public class vwHome extends JFrame {
 		contentPane.add(this.scrollA = new JScrollPane(txtA));
 		scrollA.setBounds(10, 136, 907, 165);
 		
-		bntMontar = new JButton("Montar");
+		bntMontar = new JButton("Montar Quest\u00E3o");
 		bntMontar.setBounds(745, 371, 159, 46);
 		bntMontar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -129,8 +130,44 @@ public class vwHome extends JFrame {
 			}
 		});
 		contentPane.add(bntMontar);
+		
+		JButton btnListar = new JButton("Listar Tudo.");
+		btnListar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				listarQuestoes();
+			}
+		});
+		btnListar.setBounds(745, 476, 159, 46);
+		contentPane.add(btnListar);
+		
+		JButton btnExpor = new JButton("Exportar CSV");
+		btnExpor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				exportarCSV();
+			}
+		});
+		btnExpor.setBounds(745, 533, 159, 46);
+		contentPane.add(btnExpor);
+		
+		btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnSair.setBounds(745, 590, 159, 46);
+		contentPane.add(btnSair);
 		atualizarLBL();
 		bloquearBotao();
+	}
+
+	protected void exportarCSV() {
+		txtArea.setText("Em construção ainda.");
+	}
+
+	protected void listarQuestoes() {
+		txtArea.setText("Em construção ainda.");
+		
 	}
 
 	private void bloquearBotao() {
