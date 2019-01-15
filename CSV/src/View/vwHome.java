@@ -63,12 +63,12 @@ public class vwHome extends JFrame {
 		
 		lblQ = new JLabel("Q:");
 		lblQ.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblQ.setBounds(868, 19, 46, 14);
+		lblQ.setBounds(851, 19, 63, 14);
 		contentPane.add(lblQ);
 		
 		lblA = new JLabel("A:");
 		lblA.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblA.setBounds(868, 43, 46, 14);
+		lblA.setBounds(851, 43, 63, 14);
 		contentPane.add(lblA);
 		
 		JLabel lblInsertQuestesSistemasvox = new JLabel("INSERT Quest\u00F5es, SistemasVOX.");
