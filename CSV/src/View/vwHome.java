@@ -158,11 +158,15 @@ public class vwHome extends JFrame {
 	}
 
 	protected void montarQuestao() {
-		String s = "";
-		s += (Controladora.consultarTotalQ() + 1) + ") " + txtQ.getText().replace("\n", " ") +":\n";
-		s += alternativasLimpa(txtA.getText());
-		txtArea.setText(s);
-		liberarbotao();		
+		if (txtQ.getText().isEmpty() || txtA.getText().isEmpty()) {
+			txtArea.setText("Poxa Vida, os Campos de Enunciado e Alternativas estão vazios.!!!!");
+		} else {
+			String s = "";
+			s += (Controladora.consultarTotalQ() + 1) + ") " + txtQ.getText().replace("\n", " ") +":\n";
+			s += alternativasLimpa(txtA.getText());
+			txtArea.setText(s);
+			liberarbotao();		
+		}
 	}
 
 	private void liberarbotao() {
