@@ -27,7 +27,7 @@ public class vwHome extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblA, lblQ;
-	private JButton bntMontar;
+	private JButton bntMontar, btnLimpar, btnSalvar;
 	private JTextArea txtArea, txtQ, txtA;
 	private JScrollPane scrollQ, scrollA, scrollArea;
 	private String [] ae = {"A) ","B) ","C) ","D) ","E) "};
@@ -85,7 +85,7 @@ public class vwHome extends JFrame {
 		contentPane.add(this.scrollArea = new JScrollPane(txtArea));
 		scrollArea.setBounds(10, 319, 713, 354);
 		
-		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				salvar();
@@ -94,7 +94,7 @@ public class vwHome extends JFrame {
 		btnSalvar.setBounds(745, 423, 159, 46);
 		contentPane.add(btnSalvar);
 		
-		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar = new JButton("Limpar");
 		btnLimpar.setBounds(745, 319, 159, 46);
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -130,6 +130,12 @@ public class vwHome extends JFrame {
 		});
 		contentPane.add(bntMontar);
 		atualizarLBL();
+		bloquearBotao();
+	}
+
+	private void bloquearBotao() {
+		btnLimpar.setEnabled(false);
+		btnSalvar.setEnabled(false);
 	}
 
 	protected void salvar() {
@@ -140,6 +146,7 @@ public class vwHome extends JFrame {
 		atualizarLBL();
 		limpar();
 		txtArea.setText("Salvo com Sucesso.");
+		bloquearBotao();
 		
 	}
 
@@ -155,11 +162,18 @@ public class vwHome extends JFrame {
 		s += (Controladora.consultarTotalQ() + 1) + ") " + txtQ.getText().replace("\n", " ") +":\n";
 		s += alternativasLimpa(txtA.getText());
 		txtArea.setText(s);
+		liberarbotao();		
+	}
+
+	private void liberarbotao() {
+		btnLimpar.setEnabled(true);
+		btnSalvar.setEnabled(true);
 		
 	}
 
 	private String alternativasLimpa(String texto) {
-		String[] alternativas;	
+		String[] alternativas;
+		listaAlternativas.clear();
 		String s = "";
 		texto = texto.replace("\n", "");
 		alternativas = texto.split(Pattern.quote("."));
