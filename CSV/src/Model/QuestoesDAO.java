@@ -58,4 +58,27 @@ public class QuestoesDAO {
 			System.out.println(sql.toString());
 		}
 	}
+
+	public static Questoes consultarQuestao(String id) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		Questoes questao = null;
+		StringBuilder sql = new StringBuilder();
+		try {
+			Connection c = FabricaConexao.conectarSQLITE();
+			stmt = c.createStatement();
+			sql.append("SELECT * FROM Questoes WHERE cod = '" + id + "' ; ");
+			rs = stmt.executeQuery(sql.toString());
+			while (rs.next()) {
+				questao = new Questoes(rs.getString(1), rs.getString(2), rs.getString(3));
+			}
+			c.close();
+
+			return questao;
+		} catch (Exception e) {
+			System.out.println(sql.toString());
+			JOptionPane.showMessageDialog(null, "ERRO: Na Classe QuestoesDAO, no método consultarQuestao(String id):\n" + e.getMessage());
+		}
+		return null;
+	}
 }

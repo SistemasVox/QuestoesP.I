@@ -36,7 +36,7 @@ public class Questoes {
 
 	@Override
 	public String toString() {
-		return "Questoes [cod=" + cod + ", enunciado=" + enunciado + ", referencia=" + referencia + "]";
+		return "Cod: " + cod + "\nENU: " + enunciado + "\nREF: " + referencia + ".";
 	}
 
 }

@@ -1,5 +1,7 @@
 package Controller;
 
+import java.util.ArrayList;
+
 import Model.Alternativa;
 import Model.AlternativaDAO;
 import Model.Questoes;
@@ -18,5 +20,15 @@ public class Controladora {
 	public static void savarA(Alternativa alternativa) {
 		AlternativaDAO.salvarA(alternativa);
 		
+	}
+	public static Questoes consultarQuestao(String id) {
+		return QuestoesDAO.consultarQuestao(id);
+	}
+	public static Alternativa consultarAlternativa(String id) {
+		return AlternativaDAO.consultarAlternativa(id);
+	}
+	public static ArrayList<Alternativa> getAlternativas(String id) {
+		// TODO Auto-generated method stub
+		return AlternativaDAO.getAlternativas(id);
 	}
 }

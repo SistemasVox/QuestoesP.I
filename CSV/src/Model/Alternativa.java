@@ -45,7 +45,7 @@ public class Alternativa {
 
 	@Override
 	public String toString() {
-		return "Alternativa [cod=" + cod + ", cod_q=" + cod_q + ", classificacao=" + classificacao + ", resposta="
+		return "COD: " + cod + ", CODQ: " + cod_q + ", Class: " + classificacao + ",\nresposta = "
 				+ resposta + "]";
 	}
 

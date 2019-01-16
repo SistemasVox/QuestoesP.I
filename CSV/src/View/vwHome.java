@@ -31,6 +31,7 @@ public class vwHome extends JFrame {
 	private JTextArea txtArea, txtQ, txtA;
 	private JScrollPane scrollQ, scrollA, scrollArea;
 	private String [] ae = {"A) ","B) ","C) ","D) ","E) "};
+	private String [] eliminar = {"A ","B ","C ","D ","E "};
 	private ArrayList<String> listaAlternativas = new ArrayList<String>();
 	private JButton btnSair;
 
@@ -167,6 +168,30 @@ public class vwHome extends JFrame {
 
 	protected void listarQuestoes() {
 		txtArea.setText("Em construção ainda.");
+		listartudo();
+		
+	}
+
+	private void listartudo() {
+		ArrayList<Questoes> questoes = new ArrayList<Questoes>();
+		String s = "";
+		
+		for (int i = 1; i <= Integer.parseInt(Controladora.consultarTotalQ()); i++) {
+			questoes.add(Controladora.consultarQuestao(String.valueOf(i)));
+		}
+		
+		for (int i = 0; i < questoes.size(); i++) {
+			s += questoes.get(i).getCod() +  ") " + questoes.get(i).getEnunciado() + "\n";
+			
+			ArrayList<Alternativa> alternativas = Controladora.getAlternativas(questoes.get(i).getCod());			
+			for (int j = 0; j < alternativas.size(); j++) {
+				s += ae[j] + alternativas.get(j).getResposta() + "\n";
+			}
+			s += "--------------------------------------------------------------------------------------\n";
+		}
+		
+		txtArea.setText(s.replace(": ", ":\n\n") + "FIM.\n");
+		//System.out.println(s + "FIM.\n");
 		
 	}
 
@@ -199,7 +224,7 @@ public class vwHome extends JFrame {
 			txtArea.setText("Poxa Vida, os Campos de Enunciado e Alternativas estão vazios.!!!!");
 		} else {
 			String s = "";
-			s += (Controladora.consultarTotalQ() + 1) + ") " + txtQ.getText().replace("\n", " ") +":\n";
+			s += (String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1)) + ") " + txtQ.getText().replace("\n", " ") +":\n";
 			s += alternativasLimpa(txtA.getText());
 			txtArea.setText(s);
 			liberarbotao();		
