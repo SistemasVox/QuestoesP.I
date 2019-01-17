@@ -294,7 +294,7 @@ public class vwHome extends JFrame {
 
 	protected void salvar() {
 		Controladora.savarQ(new Questoes((String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1)),
-				(txtQ.getText().replace("\n", " ")), ""));
+				(txtQ.getText().replace("\n", " ")), "RFV"));
 		
 		for (int i = 0; i < listaAlternativas.size(); i++) {
 			Controladora.savarA(new Alternativa(String.valueOf(Integer.parseInt(Controladora.consultarTotalA()) + 1),
@@ -342,7 +342,7 @@ public class vwHome extends JFrame {
 		alternativas = texto.split(Pattern.quote("."));
 		for (int i = 0; i < alternativas.length; i++) {
 			s += ("\n" + ae[i] + alternativas[i].substring(2, alternativas[i].length()) + ".");
-			listaAlternativas.add(alternativas[i].substring(2, alternativas[i].length()) + ".");
+			listaAlternativas.add(alternativas[i].substring(2, alternativas[i].length()).replace("\n", " "));
 			// System.out.println(alternativas[i].substring(2, alternativas[i].length()) +
 			// ".");
 			// System.out.println(alternativas[i]);
