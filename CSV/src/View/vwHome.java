@@ -260,6 +260,7 @@ public class vwHome extends JFrame {
 		txtA.setText("");
 		txtQ.setText("");
 		txtArea.setText("");
+		bloquearBotao();
 		atualizarLBL();
 	}
 
