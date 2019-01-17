@@ -19,6 +19,9 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
@@ -163,11 +166,54 @@ public class vwHome extends JFrame {
 	}
 
 	protected void exportarCSV() {
-		txtArea.setText("Em construção ainda.");
+		ArrayList<Questoes> questoes = new ArrayList<Questoes>();
+		ArrayList<Alternativa> alternativas = new ArrayList<Alternativa>();
+		
+		for (int i = 1; i <= Integer.parseInt(Controladora.consultarTotalQ()); i++) {
+			questoes.add(Controladora.consultarQuestao(String.valueOf(i)));
+		}
+		
+		for (int i = 1; i <= Integer.parseInt(Controladora.consultarTotalA()); i++) {
+			alternativas.add(Controladora.consultarAlternativa(String.valueOf(i)));
+		}
+		 exportarQ(questoes);
+	}
+
+	private void exportarQ(ArrayList<Questoes> questoes) {
+		try {
+			PrintWriter pw = new PrintWriter(new File("Questões.csv"));
+			StringBuilder sb = new StringBuilder();
+			String separador = ",";
+			String finalizador = "\r\n";
+			
+	        sb.append("cod");
+	        sb.append(separador);
+	        sb.append("enunciado");
+	        sb.append(separador);
+	        sb.append("referencia");
+	        //sb.append(separador);
+	        sb.append(finalizador);
+
+			for (int i = 0; i < questoes.size(); i++) {
+		        sb.append( questoes.get(i).getCod());
+		        sb.append(separador);
+		        sb.append("'" + questoes.get(i).getEnunciado().replace("\n", "") + "'");
+		        sb.append(separador);
+		        sb.append("'" +  "vazio"   + "'" );
+		        //sb.append(separador);
+		        sb.append(finalizador);
+			}
+	        pw.write(sb.toString());
+	        pw.close();
+	        txtArea.setText("Exportado com Sucesso.");
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	protected void listarQuestoes() {
-		txtArea.setText("Em construção ainda.");
 		listartudo();
 		
 	}
@@ -190,9 +236,7 @@ public class vwHome extends JFrame {
 			s += "--------------------------------------------------------------------------------------\n";
 		}
 		
-		txtArea.setText(s.replace(": ", ":\n\n") + "FIM.\n");
-		//System.out.println(s + "FIM.\n");
-		
+		txtArea.setText(s.replace(": ", ":\n\n") + "FIM.\n");		
 	}
 
 	private void bloquearBotao() {
