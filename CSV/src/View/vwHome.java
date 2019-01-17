@@ -25,6 +25,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class vwHome extends JFrame {
 
@@ -109,6 +111,12 @@ public class vwHome extends JFrame {
 		contentPane.add(btnLimpar);
 
 		txtQ = new JTextArea();
+		txtQ.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				bloquearBotao();
+			}
+		});
 		txtQ.setFont(new Font("Monospaced", Font.ITALIC, 14));
 		txtQ.setLineWrap(true);
 		txtQ.setWrapStyleWord(true);
@@ -118,6 +126,12 @@ public class vwHome extends JFrame {
 		scrollQ.setBounds(10, 60, 907, 65);
 
 		txtA = new JTextArea();
+		txtA.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				bloquearBotao();
+			}
+		});
 		txtA.setFont(new Font("Monospaced", Font.BOLD, 14));
 		txtA.setLineWrap(true);
 		txtA.setWrapStyleWord(true);
@@ -261,7 +275,7 @@ public class vwHome extends JFrame {
 		}
 
 		for (int i = 0; i < questoes.size(); i++) {
-			s += questoes.get(i).getCod() + ") " + questoes.get(i).getEnunciado() + "\n";
+			s += questoes.get(i).getCod() + ") " + questoes.get(i).getEnunciado() + "\n\n";
 
 			ArrayList<Alternativa> alternativas = Controladora.getAlternativas(questoes.get(i).getCod());
 			for (int j = 0; j < alternativas.size(); j++) {
