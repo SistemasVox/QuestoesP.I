@@ -355,15 +355,21 @@ public class vwHome extends JFrame {
 		return s;
 	}
 
-	private String tratarA(String string) {
+	private String tratarA(String txt) {
 		
 		for (int i = 0; i < ae.length; i++) {
-			for (int j = 0; j < eliminar.length; j++) {
-				string = string.replace(ae [i] + eliminar[j], " ");
+			for (int j = 0; j < eliminar.length; j++) {	
+				try {
+					if (txt.trim().substring(0, 2).equals((ae [i] + eliminar[j]))) {
+						txt = txt.replace(ae [i] + eliminar[j], " ");	
+					}
+				} catch (Exception e) {
+					
+				}					
 			}
 		}
 
-		return string.trim() + ".";
+		return txt.trim() + ".";
 	}
 
 	private void atualizarLBL() {
