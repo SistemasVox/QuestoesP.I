@@ -35,8 +35,8 @@ public class vwHome extends JFrame {
 	private JButton bntMontar, btnLimpar, btnSalvar;
 	private JTextArea txtArea, txtQ, txtA;
 	private JScrollPane scrollQ, scrollA, scrollArea;
-	private String[] ae = { "A) ", "B) ", "C) ", "D) ", "E) " };
-	private String[] eliminar = { "A ", "B ", "C ", "D ", "E " };
+	private String[] ae = { "A", "B", "C", "D", "E" };
+	private String[] eliminar = { " ", ")" };
 	private ArrayList<String> listaAlternativas = new ArrayList<String>();
 	private JButton btnSair;
 
@@ -84,9 +84,10 @@ public class vwHome extends JFrame {
 		contentPane.add(lblInsertQuestesSistemasvox);
 
 		txtArea = new JTextArea();
+		txtArea.setEditable(false);
 		txtArea.setWrapStyleWord(true);
 		txtArea.setToolTipText("Quest\u00E3o Montada.");
-		txtArea.setFont(new Font("Monospaced", Font.BOLD, 14));
+		txtArea.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
 		txtArea.setLineWrap(true);
 
 		contentPane.add(this.scrollArea = new JScrollPane(txtArea));
@@ -132,7 +133,7 @@ public class vwHome extends JFrame {
 				bloquearBotao();
 			}
 		});
-		txtA.setFont(new Font("Monospaced", Font.BOLD, 14));
+		txtA.setFont(new Font("Monospaced", Font.BOLD | Font.ITALIC, 14));
 		txtA.setLineWrap(true);
 		txtA.setWrapStyleWord(true);
 		txtA.setToolTipText("Informe as Alternativas?");
@@ -278,8 +279,9 @@ public class vwHome extends JFrame {
 			s += questoes.get(i).getCod() + ") " + questoes.get(i).getEnunciado() + "\n\n";
 
 			ArrayList<Alternativa> alternativas = Controladora.getAlternativas(questoes.get(i).getCod());
+			
 			for (int j = 0; j < alternativas.size(); j++) {
-				s += ae[j] + alternativas.get(j).getResposta() + "\n";
+				s += ae[j] + eliminar[1] + " " + alternativas.get(j).getResposta() + "\n";
 			}
 			s += "--------------------------------------------------------------------------------------\n";
 		}
@@ -294,7 +296,7 @@ public class vwHome extends JFrame {
 
 	protected void salvar() {
 		Controladora.savarQ(new Questoes((String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1)),
-				(txtQ.getText().replace("\n", " ")), "RFV"));
+				(tratarQ(txtQ.getText())), "RFV"));
 		
 		for (int i = 0; i < listaAlternativas.size(); i++) {
 			Controladora.savarA(new Alternativa(String.valueOf(Integer.parseInt(Controladora.consultarTotalA()) + 1),
@@ -305,6 +307,10 @@ public class vwHome extends JFrame {
 		txtArea.setText("Salvo com Sucesso.");
 		bloquearBotao();
 
+	}
+
+	private String tratarQ(String txtQuestaoTela) {
+		return txtQuestaoTela.replace("\n", " ").trim();
 	}
 
 	protected void limpar() {
@@ -334,20 +340,30 @@ public class vwHome extends JFrame {
 
 	}
 
-	private String alternativasLimpa(String texto) {
+	private String alternativasLimpa(String textoAlternativa) {
 		String[] alternativas;
 		listaAlternativas.clear();
 		String s = "";
-		texto = texto.replace("\n", "");
-		alternativas = texto.split(Pattern.quote("."));
+		textoAlternativa = textoAlternativa.replace("\n", " ").trim();
+		
+		alternativas = textoAlternativa.split(Pattern.quote("."));
+		
 		for (int i = 0; i < alternativas.length; i++) {
-			s += ("\n" + ae[i] + alternativas[i].substring(2, alternativas[i].length()) + ".");
-			listaAlternativas.add(alternativas[i].substring(2, alternativas[i].length()).replace("\n", " "));
-			// System.out.println(alternativas[i].substring(2, alternativas[i].length()) +
-			// ".");
-			// System.out.println(alternativas[i]);
+			s += ("\n" + ae[i] +") " + tratarA(alternativas[i]));
+			listaAlternativas.add(tratarA(alternativas[i]));
 		}
 		return s;
+	}
+
+	private String tratarA(String string) {
+		
+		for (int i = 0; i < ae.length; i++) {
+			for (int j = 0; j < eliminar.length; j++) {
+				string = string.replace(ae [i] + eliminar[j], " ");
+			}
+		}
+
+		return string.trim() + ".";
 	}
 
 	private void atualizarLBL() {

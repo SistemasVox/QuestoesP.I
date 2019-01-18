@@ -28,7 +28,6 @@ public class Controladora {
 		return AlternativaDAO.consultarAlternativa(id);
 	}
 	public static ArrayList<Alternativa> getAlternativas(String id) {
-		// TODO Auto-generated method stub
 		return AlternativaDAO.getAlternativas(id);
 	}
 }
