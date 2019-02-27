@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import Controller.Controladora;
 import Model.Alternativa;
 import Model.Questoes;
+import Test.SelecionarAqr;
 
 import javax.swing.JLabel;
 import java.awt.Font;

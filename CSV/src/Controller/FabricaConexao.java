@@ -6,18 +6,22 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import Test.SelecionarAqr;
+import View.vwBoot;
+import View.vwHome;
+
 public class FabricaConexao {
+	
+	private static String bdLite = vwBoot.caminhoBD;
 
 	public static Connection conectarSQLITE() {
 		Connection c = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager
-					.getConnection("jdbc:sqlite:SQL/LITE/questoes.db");
+					.getConnection("jdbc:sqlite:"+bdLite);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Arquivo questoes.db não encontrado, por favor crie uma pasta: SQL/LITE/questoes.db");
-			JOptionPane.showMessageDialog(null, e.getMessage());
-			System.exit(0);
+			JOptionPane.showMessageDialog(null, "Arquivo questoes.db não encontrado, por favor crie uma pasta: SQL/LITE/questoes.db\nOu o selecione");
 		}
 		return c;
 	}
