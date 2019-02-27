@@ -14,11 +14,14 @@ public class SelecionarAqr {
 		fc.setFileFilter(filtroDB);
 		fc.setDialogTitle("Selcionando o Banco Questões");
 		int resposta = fc.showOpenDialog(null);
+		System.out.println(resposta);
 		
 		if (resposta == JFileChooser.APPROVE_OPTION) {
 			File file = new File(fc.getSelectedFile().getAbsolutePath());
 			//System.out.println(file.getPath().toString());
 			s = file.getPath().toString();
+		}else {
+			System.exit(0);
 		}
 	}
 
