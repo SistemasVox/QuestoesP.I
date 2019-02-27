@@ -13,11 +13,11 @@ public class FabricaConexao {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager
-					.getConnection("jdbc:sqlite:C:\\Users\\Marcelo\\Documents\\CSV\\CSV\\SQL\\LITE\\questoes.db");
+					.getConnection("jdbc:sqlite:SQL/LITE/questoes.db");
 		} catch (Exception e) {
-			if (JOptionPane.showConfirmDialog(null, "Servidor SQLITE OFFLINE\n" + e.getMessage()) == 0) {
-				System.exit(0);
-			}
+			JOptionPane.showMessageDialog(null, "Arquivo questoes.db não encontrado, por favor crie uma pasta: SQL/LITE/questoes.db");
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			System.exit(0);
 		}
 		return c;
 	}
@@ -25,14 +25,12 @@ public class FabricaConexao {
 		Connection c = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			c = DriverManager.getConnection("jdbc:mysql://localhost:3306/megasena", "root", "");
+			c = DriverManager.getConnection("jdbc:mysql://localhost:3306/questoes", "root", "");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
-			e.printStackTrace();
-			if (JOptionPane.showConfirmDialog(null, "Servidor MySQL OFFLINE") == 0) {
-				System.exit(0);
-			}
+			JOptionPane.showMessageDialog(null, "MySQL Off-line, verifique se o banco (questoes) existe.");
+			System.exit(0);
 		}
 		return c;
 	}
