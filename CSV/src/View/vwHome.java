@@ -14,6 +14,8 @@ import Model.Questoes;
 import Test.SelecionarAqr;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
@@ -34,7 +36,9 @@ public class vwHome extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblA, lblQ;
 	private JButton bntMontar, btnLimpar, btnSalvar;
-	private JTextArea txtArea, txtQ, txtA;
+	private static JTextArea txtArea;
+	private JTextArea txtQ;
+	private JTextArea txtA;
 	private JScrollPane scrollQ, scrollA, scrollArea;
 	private String[] ae = { "A", "B", "C", "D", "E" };
 	private String[] eliminar = { " ", ")" };
@@ -163,7 +167,8 @@ public class vwHome extends JFrame {
 		JButton btnExpor = new JButton("Exportar CSV");
 		btnExpor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				exportarCSV();
+				vwExport export = new vwExport();
+				export.setVisible(true);
 			}
 		});
 		btnExpor.setBounds(745, 533, 159, 46);
@@ -181,7 +186,7 @@ public class vwHome extends JFrame {
 		bloquearBotao();
 	}
 
-	protected void exportarCSV() {
+	static void exportarCSV(String separador, String texto) {
 		ArrayList<Questoes> questoes = new ArrayList<Questoes>();
 		ArrayList<Alternativa> alternativas = new ArrayList<Alternativa>();
 
@@ -192,15 +197,21 @@ public class vwHome extends JFrame {
 		for (int i = 1; i <= Integer.parseInt(Controladora.consultarTotalA()); i++) {
 			alternativas.add(Controladora.consultarAlternativa(String.valueOf(i)));
 		}
-		exportarQ(questoes);
-		exportarA(alternativas);
+		exportarQ(questoes, separador, texto);
+		exportarA(alternativas, separador, texto);
+		File arquivo = new File("Questões.csv");
+		File arquivo2 = new File("Alternativas.csv");
+		if (arquivo.exists() && arquivo2.exists()) {
+			JOptionPane.showMessageDialog(null, "Exportação realizada com sucesso, verifique no caminho:\n" + arquivo.getAbsoluteFile() + "\n" + arquivo2.getAbsoluteFile());
+		}else {
+			JOptionPane.showMessageDialog(null, "Erro na exportação" + arquivo.getAbsoluteFile() + "\n" + arquivo2.getAbsoluteFile());
+		}
 	}
 
-	private void exportarQ(ArrayList<Questoes> questoes) {
+	private static void exportarQ(ArrayList<Questoes> questoes, String separador, String texto) {
 		try {
 			PrintWriter pw = new PrintWriter(new File("Questões.csv"));
 			StringBuilder sb = new StringBuilder();
-			String separador = ",";
 			String finalizador = "\r\n";
 
 			sb.append("cod");
@@ -213,9 +224,9 @@ public class vwHome extends JFrame {
 			for (int i = 0; i < questoes.size(); i++) {
 				sb.append(questoes.get(i).getCod());
 				sb.append(separador);
-				sb.append("'" + questoes.get(i).getEnunciado() + "'");
+				sb.append(texto + questoes.get(i).getEnunciado() + texto);
 				sb.append(separador);
-				sb.append("'" + questoes.get(i).getReferencia() + "'");
+				sb.append(texto + questoes.get(i).getReferencia() + texto);
 				sb.append(finalizador);
 			}
 			pw.write(sb.toString());
@@ -228,11 +239,10 @@ public class vwHome extends JFrame {
 
 	}
 	
-	private void exportarA(ArrayList<Alternativa> alternativas) {
+	private static void exportarA(ArrayList<Alternativa> alternativas, String separador, String texto) {
 		try {
 			PrintWriter pw = new PrintWriter(new File("Alternativas.csv"));
 			StringBuilder sb = new StringBuilder();
-			String separador = ",";
 			String finalizador = "\r\n";
 
 			sb.append("cod");
@@ -251,7 +261,7 @@ public class vwHome extends JFrame {
 				sb.append(separador);
 				sb.append(alternativas.get(i).getClassificacao());
 				sb.append(separador);
-				sb.append("'" + alternativas.get(i).getResposta()+ "'");
+				sb.append(texto + alternativas.get(i).getResposta()+ texto);
 				sb.append(finalizador);
 			}
 			pw.write(sb.toString());
