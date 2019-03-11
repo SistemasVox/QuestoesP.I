@@ -203,6 +203,7 @@ public class vwHome extends JFrame {
 		File arquivo2 = new File("Alternativas.csv");
 		if (arquivo.exists() && arquivo2.exists()) {
 			JOptionPane.showMessageDialog(null, "Exportação realizada com sucesso, verifique no caminho:\n" + arquivo.getAbsoluteFile() + "\n" + arquivo2.getAbsoluteFile());
+			txtArea.setText("Exportação realizada com sucesso, verifique no caminho:\n" + arquivo.getAbsoluteFile() + "\n" + arquivo2.getAbsoluteFile());
 		}else {
 			JOptionPane.showMessageDialog(null, "Erro na exportação" + arquivo.getAbsoluteFile() + "\n" + arquivo2.getAbsoluteFile());
 		}
@@ -231,7 +232,6 @@ public class vwHome extends JFrame {
 			}
 			pw.write(sb.toString());
 			pw.close();
-			txtArea.setText("Exportado com Sucesso.");
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

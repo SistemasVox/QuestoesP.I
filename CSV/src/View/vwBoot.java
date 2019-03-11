@@ -18,7 +18,7 @@ public class vwBoot {
 				vwHome home = new vwHome();
 				home.setVisible(true);
 			}else {
-				JOptionPane.showMessageDialog(null, "["+caminhoBD+"] não encontrado.\nPor favor, encontre o Banco de Questões e o Selecione.");
+				JOptionPane.showMessageDialog(null, "["+file.getAbsolutePath()+"] não encontrado.\nPor favor, encontre o Banco de Questões e o Selecione.");
 				SelecionarAqr aqr = new SelecionarAqr();
 				aqr.main(null);
 				caminhoBD = aqr.s;				
