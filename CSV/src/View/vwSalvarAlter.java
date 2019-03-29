@@ -56,7 +56,7 @@ public class vwSalvarAlter extends JFrame {
 		this.listaAlternativas = listaAlternativas;
 		this.vwHome = vwHome;
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 758, 479);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
