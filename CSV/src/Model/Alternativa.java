@@ -1,14 +1,15 @@
 package Model;
 
 public class Alternativa {
-	private String cod, cod_q, classificacao, resposta;
+	private String cod, cod_q, classificacao, resposta, justificativa;
 
-	public Alternativa(String cod, String cod_q, String classificacao, String resposta) {
+	public Alternativa(String cod, String cod_q, String classificacao, String resposta, String justificativa) {
 		super();
 		this.cod = cod;
 		this.cod_q = cod_q;
 		this.classificacao = classificacao;
 		this.resposta = resposta;
+		this.justificativa = justificativa;
 	}
 
 	public String getCod() {
@@ -47,6 +48,14 @@ public class Alternativa {
 	public String toString() {
 		return "[COD: " + cod + ", CODQ: " + cod_q + ", Class: " + classificacao + ",\nresposta = "
 				+ resposta + "]";
+	}
+
+	public String getJustificativa() {
+		return justificativa;
+	}
+
+	public void setJustificativa(String justificativa) {
+		this.justificativa = justificativa;
 	}
 
 }

@@ -43,11 +43,12 @@ public class AlternativaDAO {
 			stmt = c.createStatement();
 			sql = new StringBuilder();
 			sql.append("INSERT INTO Alternativa");
-			sql.append(" (cod, cod_q, classificacao, resposta) ");
+			sql.append(" (cod, cod_q, classificacao, resposta, justificativa) ");
 			sql.append("VALUES ('" + alternativa.getCod() + "', ");
 			sql.append("'" + alternativa.getCod_q() + "',");
 			sql.append("'" + alternativa.getClassificacao() + "',");
-			sql.append("'" + alternativa.getResposta() + "');");
+			sql.append("'" + alternativa.getResposta() + "',");
+			sql.append("'" + alternativa.getJustificativa() + "');");
 			stmt.executeUpdate(sql.toString());
 			stmt.close();
 			c.commit();
@@ -72,7 +73,7 @@ public class AlternativaDAO {
 			sql.append("SELECT * FROM Alternativa WHERE cod = '" + id + "' ; ");
 			rs = stmt.executeQuery(sql.toString());
 			while (rs.next()) {
-				alternativa = new Alternativa(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
+				alternativa = new Alternativa(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
 			}
 			c.close();
 
@@ -95,7 +96,7 @@ public class AlternativaDAO {
 			sql.append("SELECT * FROM Alternativa WHERE cod_q = '" + id + "' ; ");
 			rs = stmt.executeQuery(sql.toString());
 			while (rs.next()) {
-				alternativas.add(new Alternativa(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+				alternativas.add(new Alternativa(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(4)));
 			}
 			c.close();
 

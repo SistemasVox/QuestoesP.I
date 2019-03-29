@@ -82,7 +82,7 @@ public class vwHome extends JFrame {
 		lblA.setBounds(851, 43, 63, 14);
 		contentPane.add(lblA);
 
-		JLabel lblInsertQuestesSistemasvox = new JLabel("INSERT Quest\u00F5es, SistemasVOX.");
+		JLabel lblInsertQuestesSistemasvox = new JLabel("X-Quest, Cadastro Quest\u00F5es.");
 		lblInsertQuestesSistemasvox.setBounds(76, -5, 704, 57);
 		lblInsertQuestesSistemasvox.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInsertQuestesSistemasvox.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
@@ -252,6 +252,8 @@ public class vwHome extends JFrame {
 			sb.append("classificacao");
 			sb.append(separador);
 			sb.append("resposta");
+			sb.append(separador);
+			sb.append("justificativa");
 			sb.append(finalizador);
 
 			for (int i = 0; i < alternativas.size(); i++) {
@@ -261,7 +263,9 @@ public class vwHome extends JFrame {
 				sb.append(separador);
 				sb.append(alternativas.get(i).getClassificacao());
 				sb.append(separador);
-				sb.append(texto + alternativas.get(i).getResposta()+ texto);
+				sb.append(alternativas.get(i).getResposta());
+				sb.append(separador);
+				sb.append(texto + alternativas.get(i).getJustificativa() + texto);
 				sb.append(finalizador);
 			}
 			pw.write(sb.toString());
@@ -294,7 +298,8 @@ public class vwHome extends JFrame {
 			for (int j = 0; j < alternativas.size(); j++) {
 				s += ae[j] + eliminar[1] + " " + alternativas.get(j).getResposta() + "\n";
 			}
-			s += "--------------------------------------------------------------------------------------\n";
+			s+= "\nReferência: " + questoes.get(i).getReferencia();
+			s += "\n--------------------------------------------------------------------------------------\n";
 		}
 
 		txtArea.setText(s.replace(": ", ":\n\n") + "FIM.\n");
@@ -306,18 +311,14 @@ public class vwHome extends JFrame {
 	}
 
 	protected void salvar() {
-		Controladora.savarQ(new Questoes((String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1)),
-				(tratarQ(txtQ.getText())), "RFV"));
-		
-		for (int i = 0; i < listaAlternativas.size(); i++) {
-			Controladora.savarA(new Alternativa(String.valueOf(Integer.parseInt(Controladora.consultarTotalA()) + 1),
-					String.valueOf(Integer.parseInt(Controladora.consultarTotalQ())), "0", listaAlternativas.get(i)));
-		}
+		vwSalvarAlter saveAlter = new vwSalvarAlter((tratarQ(txtQ.getText())), listaAlternativas, this);
+		saveAlter.setVisible(true);		
+	}
+	public void salvarSucesso() {
 		atualizarLBL();
 		limpar();
 		txtArea.setText("Salvo com Sucesso.");
-		bloquearBotao();
-
+		bloquearBotao(); 		
 	}
 
 	private String tratarQ(String txtQuestaoTela) {
