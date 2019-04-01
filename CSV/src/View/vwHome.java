@@ -40,10 +40,10 @@ public class vwHome extends JFrame {
 	private JTextArea txtQ;
 	private JTextArea txtA;
 	private JScrollPane scrollQ, scrollA, scrollArea;
-	private String[] ae = { "A", "B", "C", "D", "E" };
 	private String[] eliminar = { " ", ")" };
 	private ArrayList<String> listaAlternativas = new ArrayList<String>();
 	private JButton btnSair;
+	private static final int alfabeto = 26;
 
 	/**
 	 * Launch the application.
@@ -300,7 +300,7 @@ public class vwHome extends JFrame {
 			ArrayList<Alternativa> alternativas = Controladora.getAlternativas(questoes.get(i).getCod());
 			
 			for (int j = 0; j < alternativas.size(); j++) {
-				s += ae[j] + eliminar[1] + " " + alternativas.get(j).getResposta() + "\n";
+				s += az(j) + eliminar[1] + " " + alternativas.get(j).getResposta() + "\n";
 			}
 			s+= "\nDificuldade:	" + questoes.get(i).getDificuldade();
 			s+= ".\nReferência:	" + questoes.get(i).getReferencia();
@@ -342,13 +342,25 @@ public class vwHome extends JFrame {
 		if (txtQ.getText().isEmpty() || txtA.getText().isEmpty()) {
 			txtArea.setText("Poxa Vida, os Campos de Enunciado e Alternativas estão vazios.!!!!");
 		} else {
+			tratarQuebrasLinhas();
+			txtA.setText(txtA.getText() + "\n");
 			String s = "";
 			s += (String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1)) + ") "
-					+ txtQ.getText().replace("\n", " ") + "\n";
+					+ txtQ.getText() + "\n";
 			s += alternativasLimpa(txtA.getText());
 			txtArea.setText(s);
 			liberarbotao();
 		}
+	}
+
+	private void tratarQuebrasLinhas() {
+		while (txtQ.getText().indexOf("\n\n") != -1) {
+			txtQ.setText(txtA.getText().replaceAll("\n\n", "\n").trim());			
+		}
+		while (txtA.getText().indexOf("\n\n") != -1) {
+			txtA.setText(txtA.getText().replaceAll("\n\n", "\n").trim());			
+		}
+		
 	}
 
 	private void liberarbotao() {
@@ -361,24 +373,33 @@ public class vwHome extends JFrame {
 		String[] alternativas;
 		listaAlternativas.clear();
 		String s = "";
-		textoAlternativa = textoAlternativa.replace("\n", " ").trim();
 		
-		alternativas = textoAlternativa.split(Pattern.quote("."));
+		alternativas = textoAlternativa.split(Pattern.quote("\n"));
 		
 		for (int i = 0; i < alternativas.length; i++) {
-			s += ("\n" + ae[i] +") " + tratarA(alternativas[i]));
+			s += ("\n" + az(i) +") " + tratarA(alternativas[i]));
 			listaAlternativas.add(tratarA(alternativas[i]));
 		}
 		return s;
 	}
 
+	private String az(int i) {
+		char s = 'a';
+		
+		for (int j = 0; j < i; j++) {
+			s++;
+		}
+		return "" +  Character.toUpperCase(s);
+	}
+
 	private String tratarA(String txt) {
 		
-		for (int i = 0; i < ae.length; i++) {
+		for (int i = 0; i < (alfabeto - 1) ; i++) {
 			for (int j = 0; j < eliminar.length; j++) {	
 				try {
-					if (txt.trim().substring(0, 2).equals((ae [i] + eliminar[j]))) {
-						txt = txt.replace(ae [i] + eliminar[j], " ");	
+					if (txt.trim().substring(0, 2).toUpperCase().equals((az(i) + eliminar[j]))) {
+						txt = txt.replace(az(i).toUpperCase() + eliminar[j], " ");	
+						txt = txt.replace(az(i).toLowerCase() + eliminar[j], " ");	
 					}
 				} catch (Exception e) {
 					
@@ -386,7 +407,7 @@ public class vwHome extends JFrame {
 			}
 		}
 
-		return txt.trim() + ".";
+		return txt.trim();
 	}
 
 	private void atualizarLBL() {
