@@ -1,12 +1,13 @@
 package Model;
 
 public class Questoes {
-	private String cod, enunciado, referencia;
+	private String cod, enunciado, dificuldade, referencia;
 
-	public Questoes(String cod, String enunciado, String referencia) {
+	public Questoes(String cod, String enunciado, String dificuldade, String referencia) {
 		super();
 		this.cod = cod;
 		this.enunciado = enunciado;
+		this.setDificuldade(dificuldade);
 		this.referencia = referencia;
 	}
 
@@ -32,6 +33,14 @@ public class Questoes {
 
 	public void setReferencia(String referencia) {
 		this.referencia = referencia;
+	}	
+
+	public String getDificuldade() {
+		return dificuldade;
+	}
+
+	public void setDificuldade(String dificuldade) {
+		this.dificuldade = dificuldade;
 	}
 
 	@Override

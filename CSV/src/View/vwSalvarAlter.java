@@ -37,6 +37,7 @@ public class vwSalvarAlter extends JFrame {
 	private ArrayList<String> listaAlternativas;
 	private JComboBox comboBox;
 	 vwHome vwHome;
+	private JComboBox cbxDifi;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -57,7 +58,7 @@ public class vwSalvarAlter extends JFrame {
 		this.vwHome = vwHome;
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 758, 479);
+		setBounds(100, 100, 758, 537);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -76,7 +77,7 @@ public class vwSalvarAlter extends JFrame {
 		txtQA.setLineWrap(true);
 		txtQA.setWrapStyleWord(true);
 		txtQA.setToolTipText("Seja: claro e expec\u00EDfico, porque a alternativa referente a quest\u00E3o, est\u00E1 correta ou incorrenta.");
-		txtQA.setBounds(69, 293, 595, 103);
+		txtQA.setBounds(69, 351, 595, 103);
 		contentPane.add(txtQA);
 		
 		JLabel lblEnunciadoDaQuesto = new JLabel("Enunciado da Quest\u00E3o");
@@ -88,22 +89,33 @@ public class vwSalvarAlter extends JFrame {
 		JLabel lblAlternativaAtual = new JLabel("Justificativa da Alternativa atual.");
 		lblAlternativaAtual.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAlternativaAtual.setFont(new Font("Tahoma", Font.BOLD, 28));
-		lblAlternativaAtual.setBounds(10, 236, 722, 51);
+		lblAlternativaAtual.setBounds(10, 294, 722, 51);
 		contentPane.add(lblAlternativaAtual);
 		
 		comboBox = new JComboBox();
 		comboBox.setToolTipText("Selecione, quanto distante essa alternativa est\u00E1 incorreta referente a alterativa correta, se for a correta, selecione '0'.");
 		comboBox.setFont(new Font("Tahoma", Font.BOLD, 14));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
-		comboBox.setBounds(492, 407, 73, 20);
+		comboBox.setBounds(492, 465, 73, 20);
 		contentPane.add(comboBox);
+		
+		cbxDifi = new JComboBox();
+		cbxDifi.setToolTipText("Selecione, nível de dificuldade desta Questão");
+		cbxDifi.setModel(new DefaultComboBoxModel(new String[] {"", "F\u00E1cil", "M\u00E9dio", "Dif\u00EDcil"}));
+		cbxDifi.setSelectedIndex(0);
+		cbxDifi.setFont(new Font("Tahoma", Font.BOLD, 14));
+		cbxDifi.setBounds(502, 248, 162, 20);
+		contentPane.add(cbxDifi);
 		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (comboBox.getSelectedItem().toString().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Selecione o Distanciamento.");
-				} else {
+				} else if(cbxDifi.getSelectedItem().toString().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Selecione o nível de dificuldade da Questão.");
+				}else {
+					cbxDifi.setEnabled(false);
 					salvar();
 					i++;
 					iniciar();
@@ -112,16 +124,20 @@ public class vwSalvarAlter extends JFrame {
 				
 			}
 		});
-		btnSalvar.setBounds(575, 407, 89, 23);
+		btnSalvar.setBounds(575, 465, 89, 23);
 		contentPane.add(btnSalvar);
 		
 
 		
 		JLabel lblDistanciamentoDaAlternativa = new JLabel("Distanciamento da alternativa correta:");
 		lblDistanciamentoDaAlternativa.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDistanciamentoDaAlternativa.setBounds(211, 405, 271, 23);
+		lblDistanciamentoDaAlternativa.setBounds(211, 463, 271, 23);
 		contentPane.add(lblDistanciamentoDaAlternativa);
 		
+		JLabel lblQ = new JLabel("N\u00EDvel de Dificuldade:");
+		lblQ.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblQ.setBounds(346, 247, 146, 23);
+		contentPane.add(lblQ);		
 		iniciar();
 		
 	}
@@ -137,10 +153,11 @@ public class vwSalvarAlter extends JFrame {
 		if (i == listaAlternativas.size()) {
 			if (JOptionPane.showConfirmDialog(null, "Essa Questão Possui Referência?") == 0) {
 				Controladora.savarQ(new Questoes((String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1)),
-						Enunciado, JOptionPane.showInputDialog("Qual seria?")));
+						Enunciado, cbxDifi.getSelectedItem().toString(), JOptionPane.showInputDialog("Qual seria?")));
 			} else {
 				Controladora.savarQ(new Questoes((String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1)),
-						Enunciado, "Referência Vazia"));
+						Enunciado, cbxDifi.getSelectedItem().toString(), "Referência Vazia."));
+				
 			}
 			dispose();
 			vwHome.salvarSucesso();

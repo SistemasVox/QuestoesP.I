@@ -43,9 +43,10 @@ public class QuestoesDAO {
 			stmt = c.createStatement();
 			sql = new StringBuilder();
 			sql.append("INSERT INTO Questoes");
-			sql.append(" (cod, enunciado, referencia) ");
+			sql.append(" (cod, enunciado, dificuldade, referencia) ");
 			sql.append("VALUES ('" + questao.getCod() + "', ");
 			sql.append("'" + questao.getEnunciado() + "',");
+			sql.append("'" + questao.getDificuldade() + "',");
 			sql.append("'" + questao.getReferencia() + "');");
 			stmt.executeUpdate(sql.toString());
 			stmt.close();
@@ -70,7 +71,7 @@ public class QuestoesDAO {
 			sql.append("SELECT * FROM Questoes WHERE cod = '" + id + "' ; ");
 			rs = stmt.executeQuery(sql.toString());
 			while (rs.next()) {
-				questao = new Questoes(rs.getString(1), rs.getString(2), rs.getString(3));
+				questao = new Questoes(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
 			}
 			c.close();
 

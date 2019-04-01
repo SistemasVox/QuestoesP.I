@@ -219,6 +219,8 @@ public class vwHome extends JFrame {
 			sb.append(separador);
 			sb.append("enunciado");
 			sb.append(separador);
+			sb.append("dificuldade");
+			sb.append(separador);
 			sb.append("referencia");
 			sb.append(finalizador);
 
@@ -226,6 +228,8 @@ public class vwHome extends JFrame {
 				sb.append(questoes.get(i).getCod());
 				sb.append(separador);
 				sb.append(texto + questoes.get(i).getEnunciado() + texto);
+				sb.append(separador);
+				sb.append(texto + questoes.get(i).getDificuldade() + texto);
 				sb.append(separador);
 				sb.append(texto + questoes.get(i).getReferencia() + texto);
 				sb.append(finalizador);
@@ -298,7 +302,8 @@ public class vwHome extends JFrame {
 			for (int j = 0; j < alternativas.size(); j++) {
 				s += ae[j] + eliminar[1] + " " + alternativas.get(j).getResposta() + "\n";
 			}
-			s+= "\nReferência: " + questoes.get(i).getReferencia();
+			s+= "\nDificuldade:	" + questoes.get(i).getDificuldade();
+			s+= ".\nReferência:	" + questoes.get(i).getReferencia();
 			s += "\n--------------------------------------------------------------------------------------\n";
 		}
 
