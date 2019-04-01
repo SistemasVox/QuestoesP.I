@@ -38,6 +38,8 @@ public class vwSalvarAlter extends JFrame {
 	private JComboBox comboBox;
 	 vwHome vwHome;
 	private JComboBox cbxDifi;
+	private JScrollPane scrollArea;
+	private JScrollPane scrollQA;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -69,16 +71,18 @@ public class vwSalvarAlter extends JFrame {
 		txtQ.setLineWrap(true);
 		txtQ.setWrapStyleWord(true);
 		txtQ.setToolTipText("Enunciado da Quest\u00E3o, mais a Alternativa atual que est\u00E1 salvando.");		
-		txtQ.setBounds(59, 85, 605, 155);
-		contentPane.add(txtQ);
+		
+		contentPane.add(this.scrollArea = new JScrollPane(txtQ));
+		scrollArea.setBounds(59, 85, 605, 155);
 		
 		txtQA = new JTextArea();		
 		txtQA.setFont(new Font("Times New Roman", Font.ITALIC, 14));
 		txtQA.setLineWrap(true);
 		txtQA.setWrapStyleWord(true);
 		txtQA.setToolTipText("Seja: claro e expec\u00EDfico, porque a alternativa referente a quest\u00E3o, est\u00E1 correta ou incorrenta.");
-		txtQA.setBounds(69, 351, 595, 103);
-		contentPane.add(txtQA);
+		
+		contentPane.add(this.scrollQA = new JScrollPane(txtQA));
+		scrollQA.setBounds(69, 351, 595, 103);
 		
 		JLabel lblEnunciadoDaQuesto = new JLabel("Enunciado da Quest\u00E3o");
 		lblEnunciadoDaQuesto.setFont(new Font("Tahoma", Font.BOLD, 28));
@@ -163,7 +167,7 @@ public class vwSalvarAlter extends JFrame {
 			vwHome.salvarSucesso();
 			
 		}else {
-			txtQ.setText(Enunciado + "\n" + ae[i] + listaAlternativas.get(i));	
+			txtQ.setText(Enunciado + "\n\n" + ae[i] + listaAlternativas.get(i));	
 		}
 	}
 }
