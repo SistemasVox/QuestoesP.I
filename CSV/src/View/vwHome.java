@@ -398,8 +398,8 @@ public class vwHome extends JFrame {
 			for (int j = 0; j < eliminar.length; j++) {	
 				try {
 					if (txt.trim().substring(0, 2).toUpperCase().equals((az(i) + eliminar[j]))) {
-						txt = txt.replace(az(i).toUpperCase() + eliminar[j], " ");	
-						txt = txt.replace(az(i).toLowerCase() + eliminar[j], " ");	
+						txt = txt.replaceFirst(az(i).toUpperCase() + eliminar[j], " ");	
+						txt = txt.replaceFirst(az(i).toLowerCase() + eliminar[j], " ");	
 					}
 				} catch (Exception e) {
 					
