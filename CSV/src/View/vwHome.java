@@ -356,13 +356,12 @@ public class vwHome extends JFrame {
 			String s = "";
 			s += (String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1)) + ") "
 					+ txtQ.getText() + "\n";
-			if (listaAlternativas.size() > 0) {
+			if (listaAlternativas.size() > 1) {
 				s += alternativasLimpa(txtA.getText());
 				txtArea.setText(s);
 				liberarbotao();
 			} else {
 				txtArea.setText("Ops, verifique o campo das 'Alternativas', se a resposta for somente uma letra, formate as alternativas da forma correta:\n\nA) Z\nB) S\nC) M\nD) J");
-				bloquearBotao();
 			}
 		}
 	}
@@ -417,8 +416,10 @@ public class vwHome extends JFrame {
 	private String tratarA(String txt) {
 		eliminar();		
 		for (int i = 0; i < (alfabeto - 1) ; i++) {
-			if (txt.trim().substring(0, 2).toUpperCase().equals((az(i) + eliminar))) {
-				txt = txt.substring(2, txt.length());
+			if (txt.length() > 2) {
+				if (txt.trim().substring(0, 2).toUpperCase().equals((az(i) + eliminar))) {
+					txt = txt.substring(2, txt.length());
+				}
 			}
 		}
 		return txt.trim();
