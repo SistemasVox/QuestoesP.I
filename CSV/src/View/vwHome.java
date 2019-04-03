@@ -375,7 +375,7 @@ public class vwHome extends JFrame {
 
 	private void tratarQuebrasLinhas() {
 		while (txtQ.getText().indexOf("\n\n") != -1) {
-			txtQ.setText(txtA.getText().replaceAll("\n\n", "\n").trim());			
+			txtQ.setText(txtQ.getText().replaceAll("\n\n", "\n").trim());			
 		}
 		while (txtA.getText().indexOf("\n\n") != -1) {
 			txtA.setText(txtA.getText().replaceAll("\n\n", "\n").trim());			
