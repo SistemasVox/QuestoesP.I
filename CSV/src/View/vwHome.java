@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -30,6 +31,8 @@ import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class vwHome extends JFrame {
 
@@ -40,11 +43,12 @@ public class vwHome extends JFrame {
 	private JTextArea txtQ;
 	private JTextArea txtA;
 	private JScrollPane scrollQ, scrollA, scrollArea;
-	private String[] eliminar = { " ", ")" };
+	private String eliminar;
 	private ArrayList<String> listaAlternativas = new ArrayList<String>();
 	private JButton btnSair;
+	private JRadioButton rdP, rbS;
+	ButtonGroup buttonGroup = new ButtonGroup();
 	private static final int alfabeto = 26;
-
 	/**
 	 * Launch the application.
 	 */
@@ -104,11 +108,11 @@ public class vwHome extends JFrame {
 				salvar();
 			}
 		});
-		btnSalvar.setBounds(745, 423, 159, 46);
+		btnSalvar.setBounds(741, 448, 159, 46);
 		contentPane.add(btnSalvar);
 
 		btnLimpar = new JButton("Limpar Campos");
-		btnLimpar.setBounds(745, 319, 159, 46);
+		btnLimpar.setBounds(741, 344, 159, 46);
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				limpar();
@@ -147,7 +151,7 @@ public class vwHome extends JFrame {
 		scrollA.setBounds(10, 136, 907, 165);
 
 		bntMontar = new JButton("Montar Quest\u00E3o");
-		bntMontar.setBounds(745, 371, 159, 46);
+		bntMontar.setBounds(741, 396, 159, 46);
 		bntMontar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				montarQuestao();
@@ -161,7 +165,7 @@ public class vwHome extends JFrame {
 				listarQuestoes();
 			}
 		});
-		btnListar.setBounds(745, 476, 159, 46);
+		btnListar.setBounds(741, 501, 159, 46);
 		contentPane.add(btnListar);
 
 		JButton btnExpor = new JButton("Exportar CSV");
@@ -171,7 +175,7 @@ public class vwHome extends JFrame {
 				export.setVisible(true);
 			}
 		});
-		btnExpor.setBounds(745, 533, 159, 46);
+		btnExpor.setBounds(741, 558, 159, 46);
 		contentPane.add(btnExpor);
 
 		btnSair = new JButton("Sair");
@@ -180,8 +184,24 @@ public class vwHome extends JFrame {
 				dispose();
 			}
 		});
-		btnSair.setBounds(745, 590, 159, 46);
+		btnSair.setBounds(741, 615, 159, 46);
 		contentPane.add(btnSair);
+		
+		JLabel lblEliminar = new JLabel("Eliminar:");
+		lblEliminar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblEliminar.setBounds(716, 300, 64, 14);
+		contentPane.add(lblEliminar);
+		
+		rdP = new JRadioButton("Parenteses");
+		buttonGroup.add(rdP);
+		rdP.setSelected(true);
+		rdP.setBounds(729, 320, 109, 23);
+		contentPane.add(rdP);
+		
+		rbS = new JRadioButton("Espa\u00E7o");
+		rbS.setBounds(840, 320, 109, 23);
+		contentPane.add(rbS);
+		buttonGroup.add(rbS);
 		atualizarLBL();
 		bloquearBotao();
 	}
@@ -300,7 +320,7 @@ public class vwHome extends JFrame {
 			ArrayList<Alternativa> alternativas = Controladora.getAlternativas(questoes.get(i).getCod());
 			
 			for (int j = 0; j < alternativas.size(); j++) {
-				s += az(j) + eliminar[1] + " " + alternativas.get(j).getResposta() + "\n";
+				s += az(j) + ")" + " " + alternativas.get(j).getResposta() + "\n";
 			}
 			s+= "\nDificuldade:	" + questoes.get(i).getDificuldade();
 			s+= ".\nReferência:	" + questoes.get(i).getReferencia();
@@ -393,21 +413,23 @@ public class vwHome extends JFrame {
 	}
 
 	private String tratarA(String txt) {
-		
+		eliminar();		
 		for (int i = 0; i < (alfabeto - 1) ; i++) {
-			for (int j = 0; j < eliminar.length; j++) {	
-				try {
-					if (txt.trim().substring(0, 2).toUpperCase().equals((az(i) + eliminar[j]))) {
-						txt = txt.replaceFirst(az(i).toUpperCase() + eliminar[j], " ");	
-						txt = txt.replaceFirst(az(i).toLowerCase() + eliminar[j], " ");	
-					}
-				} catch (Exception e) {
-					
-				}					
+			if (txt.trim().substring(0, 2).toUpperCase().equals((az(i) + eliminar))) {
+				txt = txt.substring(2, txt.length());
 			}
 		}
-
 		return txt.trim();
+	}
+
+	private void eliminar() {
+		if (rdP.isSelected()) {
+			eliminar = ")";
+		} else if (rbS.isSelected()){
+			eliminar = " ";
+		}else {
+			JOptionPane.showMessageDialog(null, "Aconteceu algo de errado nos RadioButtons");
+		}
 	}
 
 	private void atualizarLBL() {

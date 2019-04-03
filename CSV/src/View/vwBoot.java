@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 import Test.SelecionarAqr;
 
-public class vwBoot {
+public abstract class vwBoot {
 	public static String caminhoBD = "SQL/LITE/questoes.db";
 
 	public static void main(String[] args) {
