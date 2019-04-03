@@ -1,7 +1,5 @@
 package View;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -12,8 +10,6 @@ import javax.swing.border.EmptyBorder;
 import Controller.Controladora;
 import Model.Alternativa;
 import Model.Questoes;
-import Test.SelecionarAqr;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -21,7 +17,6 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -47,11 +42,9 @@ public class vwHome extends JFrame {
 	private ArrayList<String> listaAlternativas = new ArrayList<String>();
 	private JButton btnSair;
 	private JRadioButton rdP, rbS;
-	ButtonGroup buttonGroup = new ButtonGroup();
+	private ButtonGroup buttonGroup = new ButtonGroup();
 	private static final int alfabeto = 26;
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -64,10 +57,6 @@ public class vwHome extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
 	public vwHome() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 937, 722);
@@ -393,17 +382,25 @@ public class vwHome extends JFrame {
 		String[] alternativas;
 		listaAlternativas.clear();
 		String s = "";
+		int t = 0;
 		
 		alternativas = textoAlternativa.split(Pattern.quote("\n"));
 		
-		for (int i = 0; i < alternativas.length; i++) {
-			s += ("\n" + az(i) +") " + tratarA(alternativas[i]));
-			listaAlternativas.add(tratarA(alternativas[i]));
+		if (alternativas.length <= alfabeto) {
+			for (int i = 0; i < alternativas.length; i++) {
+				if (alternativas[i].length() > 1) {
+					s += ("\n" + az(t) +") " + tratarA(alternativas[i]));
+					listaAlternativas.add(tratarA(alternativas[i]));
+					t++;
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Caramba, são permitidas só alternativas de a .. z");
 		}
 		return s;
 	}
 
-	private String az(int i) {
+	public static String az(int i) {
 		char s = 'a';
 		
 		for (int j = 0; j < i; j++) {
