@@ -356,8 +356,8 @@ public class vwHome extends JFrame {
 			String s = "";
 			s += (String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1)) + ") "
 					+ txtQ.getText() + "\n";
+			s += alternativasLimpa(txtA.getText());
 			if (listaAlternativas.size() > 1) {
-				s += alternativasLimpa(txtA.getText());
 				txtArea.setText(s);
 				liberarbotao();
 			} else {
