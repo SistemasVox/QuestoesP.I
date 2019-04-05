@@ -167,7 +167,7 @@ public class vwSalvarAlter extends JFrame {
 			vwHome.salvarSucesso();
 			
 		}else {
-			txtQ.setText(Enunciado + "\n\n" + vwHome.az(i) + listaAlternativas.get(i));	
+			txtQ.setText(Enunciado + "\n\n" + vwHome.az(i) +") " +listaAlternativas.get(i));	
 		}
 	}
 }
