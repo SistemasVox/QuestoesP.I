@@ -95,7 +95,7 @@ public class vwExport extends JFrame {
 		JButton btnExportar = new JButton("Exportar");
 		btnExportar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				vwHome.exportarCSV(comboBoxC.getSelectedItem().toString(), comboBoxT.getSelectedItem().toString());
+				vwCadastrarQuestoes.exportarCSV(comboBoxC.getSelectedItem().toString(), comboBoxT.getSelectedItem().toString());
 				dispose();
 				
 			}

@@ -15,7 +15,7 @@ public abstract class vwBoot {
 			File file = new File(caminhoBD);
 			if(file.exists()) {
 				continuar = false;
-				vwHome home = new vwHome();
+				vwHomePRO home = new vwHomePRO();
 				home.setVisible(true);
 			}else {
 				JOptionPane.showMessageDialog(null, "["+file.getAbsolutePath()+"] não encontrado.\nPor favor, encontre o Banco de Questões e o Selecione.");

@@ -36,7 +36,7 @@ public class vwSalvarAlter extends JFrame {
 	private String[] ae = { "A) ", "B) ", "C) ", "D) ", "E) " };
 	private ArrayList<String> listaAlternativas;
 	private JComboBox comboBox;
-	 vwHome vwHome;
+	 vwCadastrarQuestoes vwHome;
 	private JComboBox cbxDifi;
 	private JScrollPane scrollArea;
 	private JScrollPane scrollQA;
@@ -53,7 +53,7 @@ public class vwSalvarAlter extends JFrame {
 			}
 		});
 	}
-	public vwSalvarAlter(String Enunciado, ArrayList<String> listaAlternativas, vwHome vwHome) {
+	public vwSalvarAlter(String Enunciado, ArrayList<String> listaAlternativas, vwCadastrarQuestoes vwHome) {
 		
 		this.Enunciado = Enunciado;
 		this.listaAlternativas = listaAlternativas;

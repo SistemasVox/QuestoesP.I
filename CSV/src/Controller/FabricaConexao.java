@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 import Test.SelecionarAqr;
 import View.vwBoot;
-import View.vwHome;
+import View.vwCadastrarQuestoes;
 
 public class FabricaConexao {
 	

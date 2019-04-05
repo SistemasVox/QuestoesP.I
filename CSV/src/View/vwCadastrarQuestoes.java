@@ -29,7 +29,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 
-public class vwHome extends JFrame {
+public class vwCadastrarQuestoes extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblA, lblQ;
@@ -49,7 +49,7 @@ public class vwHome extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vwHome frame = new vwHome();
+					vwCadastrarQuestoes frame = new vwCadastrarQuestoes();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +57,7 @@ public class vwHome extends JFrame {
 			}
 		});
 	}
-	public vwHome() {
+	public vwCadastrarQuestoes() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 937, 722);
 		contentPane = new JPanel();
