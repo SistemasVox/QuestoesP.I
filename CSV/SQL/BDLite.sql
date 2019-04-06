@@ -454,4 +454,5 @@ INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (26, 224);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (26, 225);
 
 -- Junção de Tabelas
-
+SELECT DISTINCT * FROM Questoes q, Conteudo c, Conteudo_Questao cq
+WHERE q.cod = cq.cod_questao and  cq.cod_conteudo = c.cod_conteudo and c.nome_conteudo = 'Matemática Básica - VII';

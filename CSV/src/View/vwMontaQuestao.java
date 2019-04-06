@@ -40,7 +40,7 @@ public class vwMontaQuestao extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblA, lblQ;
-	private JButton bntMontar, btnLimpar, btnDetalhes;
+	private JButton bntMontar, btnTop, btnDetalhes;
 	private static JTextArea txtArea;
 	private JScrollPane scrollQ, scrollA, scrollArea;
 	private String eliminar;
@@ -52,6 +52,10 @@ public class vwMontaQuestao extends JFrame {
 	private JComboBox cbxA;
 	private JComboBox cbxDisc;
 	private JComboBox cbxConte;
+	private JRadioButton rbMai;
+	private JRadioButton rbMin;
+	private JRadioButton rbPare;
+	private JRadioButton rbPf;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -101,31 +105,33 @@ public class vwMontaQuestao extends JFrame {
 		btnDetalhes = new JButton("Ver Quest\u00F5es Detalhada.");
 		btnDetalhes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				listarDetalhes();				
+				verQuestoesDetalhes();				
 			}
 		});
 		btnDetalhes.setBounds(739, 248, 181, 46);
 		contentPane.add(btnDetalhes);
 
-		btnLimpar = new JButton("Limpar Campos.");
-		btnLimpar.setBounds(739, 144, 181, 46);
-		btnLimpar.addActionListener(new ActionListener() {
+		btnTop = new JButton("Subir Barra de Rolagem");
+		btnTop.setToolTipText("Subir barra de rolagem das Quest\u00F5es.");
+		btnTop.setBounds(739, 144, 181, 46);
+		btnTop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				limpar();
 			}
 		});
-		contentPane.add(btnLimpar);
+		contentPane.add(btnTop);
 
 		bntMontar = new JButton("Ver Quest\u00F5es.");
 		bntMontar.setBounds(739, 196, 181, 46);
 		bntMontar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listartudo();
+				verQuestoes();
 			}
 		});
 		contentPane.add(bntMontar);
 
 		JButton btnListar = new JButton("Escolher Aleat\u00F3rio.");
+		btnListar.setEnabled(false);
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				listarQuestoes();
@@ -186,6 +192,11 @@ public class vwMontaQuestao extends JFrame {
 		contentPane.add(lblConteudo);
 		
 		cbxConte = new JComboBox();
+		cbxConte.addItemListener(new ItemListener() {
+	        public void itemStateChanged(ItemEvent arg0) {
+	        	limpaarea();
+	        }
+	    });
 		cbxConte.setBounds(164, 117, 446, 20);
 		contentPane.add(cbxConte);
 		
@@ -195,27 +206,27 @@ public class vwMontaQuestao extends JFrame {
 		lblAlternativas.setBounds(620, 91, 100, 14);
 		contentPane.add(lblAlternativas);
 		
-		JRadioButton rdbtnMaisculas = new JRadioButton("Mai\u00FAsculas");
-		letras.add(rdbtnMaisculas);
-		rdbtnMaisculas.setSelected(true);
-		rdbtnMaisculas.setBounds(719, 88, 100, 23);
-		contentPane.add(rdbtnMaisculas);
+		rbMai = new JRadioButton("Mai\u00FAsculas");
+		letras.add(rbMai);
+		rbMai.setSelected(true);
+		rbMai.setBounds(719, 88, 100, 23);
+		contentPane.add(rbMai);
 		
-		JRadioButton rdbtnMinsculas = new JRadioButton("Min\u00FAsculas");
-		letras.add(rdbtnMinsculas);
-		rdbtnMinsculas.setBounds(821, 88, 100, 23);
-		contentPane.add(rdbtnMinsculas);
+		rbMin = new JRadioButton("Min\u00FAsculas");
+		letras.add(rbMin);
+		rbMin.setBounds(821, 88, 100, 23);
+		contentPane.add(rbMin);
 		
-		JRadioButton rdbtnParenteses = new JRadioButton("Parenteses");
-		formatacao.add(rdbtnParenteses);
-		rdbtnParenteses.setSelected(true);
-		rdbtnParenteses.setBounds(718, 114, 100, 23);
-		contentPane.add(rdbtnParenteses);
+		rbPare = new JRadioButton("Parenteses");
+		formatacao.add(rbPare);
+		rbPare.setSelected(true);
+		rbPare.setBounds(718, 114, 100, 23);
+		contentPane.add(rbPare);
 		
-		JRadioButton rdbtnProntoFinal = new JRadioButton("Ponto final");
-		formatacao.add(rdbtnProntoFinal);
-		rdbtnProntoFinal.setBounds(820, 114, 100, 23);
-		contentPane.add(rdbtnProntoFinal);
+		rbPf = new JRadioButton("Ponto final");
+		formatacao.add(rbPf);
+		rbPf.setBounds(820, 114, 100, 23);
+		contentPane.add(rbPf);
 		bloquearBotao();
 		atualizarAreaConhecimento();
 		atualizarLBL();
@@ -223,6 +234,7 @@ public class vwMontaQuestao extends JFrame {
 
 	private void atualizarConteudo() {
 		cbxConte.removeAllItems();
+		limpaarea();
 		ArrayList<String> conteudos = new ArrayList<String>();
 		try {
 			conteudos = Controladora.consultarConteudos(cbxDisc.getSelectedItem().toString());	
@@ -234,6 +246,7 @@ public class vwMontaQuestao extends JFrame {
 		}
 	}
 	private void atualizarDisciplinas() {
+		limpaarea();
 		cbxDisc.removeAllItems();
 		ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 		try {
@@ -251,11 +264,16 @@ public class vwMontaQuestao extends JFrame {
 		System.out.println(areas.size());
 		for (int i = 0; i < areas.size(); i++) {
 			cbxA.addItem(areas.get(i).getNome());
+			limpaarea();
 		}
 		
 		
 	}
-	protected void listarDetalhes() {
+	private void limpaarea() {
+		txtArea.setText("");
+		
+	}
+	protected void verQuestoesDetalhes() {
 		ArrayList<Questoes> questoes = new ArrayList<Questoes>();
 		String s = "";
 
@@ -269,7 +287,11 @@ public class vwMontaQuestao extends JFrame {
 			ArrayList<Alternativa> alternativas = Controladora.getAlternativas(questoes.get(i).getCod());
 			
 			for (int j = 0; j < alternativas.size(); j++) {
-				s += az(j) + ")" + " " + alternativas.get(j).getResposta() + "\n";
+				if (rbMin.isSelected()) {
+					s += az(j).toLowerCase() + formatacaoA() + alternativas.get(j).getResposta() + "\n";
+				} else {
+					s += az(j) + formatacaoA() + alternativas.get(j).getResposta() + "\n";
+				}
 				s += "Classificação:	" + alternativas.get(j).getClassificacao() + ". " + acerto(alternativas.get(j).getClassificacao()) + "\n";
 				s += "Justificativa:	" + alternativas.get(j).getJustificativa() + "\n\n";
 			}
@@ -289,10 +311,10 @@ public class vwMontaQuestao extends JFrame {
 		}
 	}
 	protected void listarQuestoes() {
-		listartudo();
+		verQuestoes();
 	}
 
-	private void listartudo() {
+	private void verQuestoes() {
 		ArrayList<Questoes> questoes = new ArrayList<Questoes>();
 		String s = "";
 		System.out.println(Controladora.consultarTotalQ(cbxConte.getSelectedItem().toString()));
@@ -300,12 +322,16 @@ public class vwMontaQuestao extends JFrame {
 		questoes = Controladora.consultarQuestoesC(cbxConte.getSelectedItem().toString());
 		
 		for (int i = 0; i < questoes.size(); i++) {
-			s += questoes.get(i).getCod() + ") " + questoes.get(i).getEnunciado() + "\n\n";
+			s += (i + 1) + ") " + questoes.get(i).getEnunciado() + "\n\n";
 
 			ArrayList<Alternativa> alternativas = Controladora.getAlternativas(questoes.get(i).getCod());
 			
 			for (int j = 0; j < alternativas.size(); j++) {
-				s += az(j) + ")" + " " + alternativas.get(j).getResposta() + "\n";
+				if (rbMin.isSelected()) {
+					s += az(j).toLowerCase() + formatacaoA() + alternativas.get(j).getResposta() + "\n";
+				} else {
+					s += az(j) + formatacaoA() + alternativas.get(j).getResposta() + "\n";
+				}
 			}
 			s+= "\nDificuldade:	" + questoes.get(i).getDificuldade();
 			s+= ".\nReferência:	" + questoes.get(i).getReferencia();
@@ -315,18 +341,25 @@ public class vwMontaQuestao extends JFrame {
 		txtArea.setText(s.replace(": ", ":\n\n") + "FIM.\n");
 	}
 
+
+	private String formatacaoA() {
+		if (rbPare.isSelected()) {
+			return ") ";
+		} else if(rbPf.isSelected()){
+			return ". ";
+		}else {
+			return ") ";
+		}
+	}
 	private void bloquearBotao() {
-		btnLimpar.setEnabled(false);
 	}
 	
 	protected void limpar() {
-		txtArea.setText("");
-		bloquearBotao();
-		atualizarLBL();
+		scrollArea.getVerticalScrollBar().setValue(0);
 	}
 
 	private void liberarbotao() {
-		btnLimpar.setEnabled(true);
+		btnTop.setEnabled(true);
 		btnDetalhes.setEnabled(true);
 
 	}
