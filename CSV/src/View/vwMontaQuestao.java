@@ -259,7 +259,7 @@ public class vwMontaQuestao extends JFrame {
 		ArrayList<Questoes> questoes = new ArrayList<Questoes>();
 		String s = "";
 
-		for (int i = 1; i <= Integer.parseInt(Controladora.consultarTotalQ()); i++) {
+		for (int i = 1; i <= Integer.parseInt(Controladora.consultarTotalQ(cbxConte.getSelectedItem().toString())); i++) {
 			questoes.add(Controladora.consultarQuestao(String.valueOf(i)));
 		}
 
@@ -295,11 +295,10 @@ public class vwMontaQuestao extends JFrame {
 	private void listartudo() {
 		ArrayList<Questoes> questoes = new ArrayList<Questoes>();
 		String s = "";
+		System.out.println(Controladora.consultarTotalQ(cbxConte.getSelectedItem().toString()));
 
-		for (int i = 1; i <= Integer.parseInt(Controladora.consultarTotalQ()); i++) {
-			questoes.add(Controladora.consultarQuestao(String.valueOf(i)));
-		}
-
+		questoes = Controladora.consultarQuestoesC(cbxConte.getSelectedItem().toString());
+		
 		for (int i = 0; i < questoes.size(); i++) {
 			s += questoes.get(i).getCod() + ") " + questoes.get(i).getEnunciado() + "\n\n";
 

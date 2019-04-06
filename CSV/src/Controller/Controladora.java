@@ -30,6 +30,9 @@ public class Controladora {
 	public static Questoes consultarQuestao(String id) {
 		return QuestoesDAO.consultarQuestao(id);
 	}
+	public static ArrayList<Questoes> consultarQuestoesC(String id) {
+		return QuestoesDAO.consultarQuestoesC(id);
+	}
 	public static Alternativa consultarAlternativa(String id) {
 		return AlternativaDAO.consultarAlternativa(id);
 	}
@@ -44,5 +47,8 @@ public class Controladora {
 	}
 	public static ArrayList<String> consultarConteudos(String nomeDisc) {
 		return ConteudoDAO.consultarConteudos(nomeDisc);
+	}
+	public static String consultarTotalQ(String nomeConteudo) {
+		return  QuestoesDAO.consultarTotalQ(nomeConteudo);
 	}
 }

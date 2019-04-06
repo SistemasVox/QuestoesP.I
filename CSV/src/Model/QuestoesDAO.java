@@ -3,6 +3,7 @@ package Model;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -79,6 +80,56 @@ public class QuestoesDAO {
 		} catch (Exception e) {
 			System.out.println(sql.toString());
 			JOptionPane.showMessageDialog(null, "ERRO: Na Classe QuestoesDAO, no método consultarQuestao(String id):\n" + e.getMessage());
+		}
+		return null;
+	}
+
+	public static String consultarTotalQ(String nomeConteudo) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder();
+		String temp = "";
+		
+		try {
+			Connection c = FabricaConexao.conectarSQLITE();
+			stmt = c.createStatement();
+			sql.append("SELECT DISTINCT COUNT(*) FROM Questoes q, Conteudo c, Conteudo_Questao cq\r\n" + 
+					"WHERE q.cod = cq.cod_questao and  cq.cod_conteudo = c.cod_conteudo and c.nome_conteudo = '"+nomeConteudo+"';");
+			rs = stmt.executeQuery(sql.toString());
+			while (rs.next()) {
+				temp = rs.getString(1);
+			}
+			c.close();
+			return temp;
+		} catch (Exception e) {
+			//vwHomeLoto.mensagem(e.getClass().getName() + ": " + e.getMessage());
+			JOptionPane.showMessageDialog(null, "ERRO: Na Classe MegaDAO, no método consultarTotalQ();\n\n" + e.getMessage());
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+
+	public static ArrayList<Questoes> consultarQuestoesC(String nomeConteudo) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder();
+		ArrayList<Questoes> temp = new ArrayList<Questoes>();
+		
+		try {
+			Connection c = FabricaConexao.conectarSQLITE();
+			stmt = c.createStatement();
+			sql.append("SELECT DISTINCT * FROM Questoes q, Conteudo c, Conteudo_Questao cq\r\n" + 
+					"WHERE q.cod = cq.cod_questao and  cq.cod_conteudo = c.cod_conteudo and c.nome_conteudo = '"+nomeConteudo+"';");
+			rs = stmt.executeQuery(sql.toString());
+			while (rs.next()) {
+				temp.add(new Questoes(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+			}
+			c.close();
+			return temp;
+		} catch (Exception e) {
+			//vwHomeLoto.mensagem(e.getClass().getName() + ": " + e.getMessage());
+			JOptionPane.showMessageDialog(null, "ERRO: Na Classe MegaDAO, no método consultarTotalQ();\n\n" + e.getMessage());
+			System.out.println(e.getMessage());
 		}
 		return null;
 	}
