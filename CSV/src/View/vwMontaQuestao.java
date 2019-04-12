@@ -13,6 +13,8 @@ import Model.Area_Conhecimento;
 import Model.Conteudo;
 import Model.Disciplina;
 import Model.Questoes;
+import Test.ExportarPDF;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -130,15 +132,14 @@ public class vwMontaQuestao extends JFrame {
 		});
 		contentPane.add(bntMontar);
 
-		JButton btnListar = new JButton("Escolher Aleat\u00F3rio.");
-		btnListar.setEnabled(false);
-		btnListar.addActionListener(new ActionListener() {
+		JButton btnPDF = new JButton("Exportar para PDF.");
+		btnPDF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				listarQuestoes();
+				exportarPDF();
 			}
 		});
-		btnListar.setBounds(739, 301, 181, 46);
-		contentPane.add(btnListar);
+		btnPDF.setBounds(739, 301, 181, 46);
+		contentPane.add(btnPDF);
 
 		JButton btnExpor = new JButton("Voltar Menu Principal.");
 		btnExpor.addActionListener(new ActionListener() {
@@ -232,6 +233,11 @@ public class vwMontaQuestao extends JFrame {
 		atualizarLBL();
 	}
 
+	protected void exportarPDF() {
+		ExportarPDF ex = new ExportarPDF(Controladora.consultarQuestoesC(cbxConte.getSelectedItem().toString()));
+		ex.gerarPDF();
+		
+	}
 	private void atualizarConteudo() {
 		cbxConte.removeAllItems();
 		limpaarea();
