@@ -13,7 +13,8 @@ import Model.Area_Conhecimento;
 import Model.Conteudo;
 import Model.Disciplina;
 import Model.Questoes;
-import Test.ExportarPDF;
+import Tools.Alphabet;
+import Tools.ExportarPDF;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -292,9 +293,9 @@ public class vwMontaQuestao extends JFrame {
 			
 			for (int j = 0; j < alternativas.size(); j++) {
 				if (rbMin.isSelected()) {
-					s += az(j).toLowerCase() + formatacaoA() + alternativas.get(j).getResposta() + "\n";
+					s += Alphabet.getLetra(j).toLowerCase() + formatacaoA() + alternativas.get(j).getResposta() + "\n";
 				} else {
-					s += az(j) + formatacaoA() + alternativas.get(j).getResposta() + "\n";
+					s += Alphabet.getLetra(j) + formatacaoA() + alternativas.get(j).getResposta() + "\n";
 				}
 				s += "Classificação:	" + alternativas.get(j).getClassificacao() + ". " + acerto(alternativas.get(j).getClassificacao()) + "\n";
 				s += "Justificativa:	" + alternativas.get(j).getJustificativa() + "\n\n";
@@ -332,9 +333,9 @@ public class vwMontaQuestao extends JFrame {
 			
 			for (int j = 0; j < alternativas.size(); j++) {
 				if (rbMin.isSelected()) {
-					s += az(j).toLowerCase() + formatacaoA() + alternativas.get(j).getResposta() + "\n";
+					s += Alphabet.getLetra(j).toLowerCase() + formatacaoA() + alternativas.get(j).getResposta() + "\n";
 				} else {
-					s += az(j) + formatacaoA() + alternativas.get(j).getResposta() + "\n";
+					s += Alphabet.getLetra(j) + formatacaoA() + alternativas.get(j).getResposta() + "\n";
 				}
 			}
 			s+= "\nDificuldade:	" + questoes.get(i).getDificuldade();
@@ -366,16 +367,6 @@ public class vwMontaQuestao extends JFrame {
 		btnTop.setEnabled(true);
 		btnDetalhes.setEnabled(true);
 
-	}
-
-
-	public static String az(int i) {
-		char s = 'a';
-		
-		for (int j = 0; j < i; j++) {
-			s++;
-		}
-		return "" +  Character.toUpperCase(s);
 	}
 
 	private void atualizarLBL() {

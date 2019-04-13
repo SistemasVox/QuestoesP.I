@@ -1,4 +1,4 @@
-package Test;
+package Tools;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,21 +24,22 @@ import com.itextpdf.text.pdf.PdfWriter;
 import Controller.Controladora;
 import Model.Alternativa;
 import Model.Questoes;
-import View.vwHomePRO;
-import View.vwMontaQuestao;
 
 public class ExportarPDF {
 	private Document document = new Document();
 	private static ArrayList<Questoes> questoes;
 		
 	
+	@SuppressWarnings("static-access")
 	public ExportarPDF(ArrayList<Questoes> questoes) {
 		super();
 		this.questoes = questoes;
 	}
 	public void gerarPDF(){		
 		try {
-			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("QUIZ.pdf"));
+			CreateDirectory.CriarDiretorio("Questionários");
+			String cor = Cor.getCor(Aleatorio.getNum(Cor.getCores().size()));
+			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Questionários/Questionário_" + cor + ".pdf"));
 			document.open();
 			adcionarLogo(document);
 			//document.add(new Paragraph("A Hello World PDF document."));
@@ -48,7 +49,7 @@ public class ExportarPDF {
 			document.close();
 			writer.close();
 			
-			File arquivo = new File("QUIZ.pdf");
+			File arquivo = new File("Questionários/Questionário_" + cor + ".pdf");
 			JOptionPane.showMessageDialog(null, "Exportado com Sucesso.\n" + arquivo.getAbsolutePath());
 		} catch (DocumentException e) {
 			System.out.println(e.getMessage());
@@ -91,7 +92,7 @@ public class ExportarPDF {
 		sublist.setListSymbol(new Chunk("", FontFactory.getFont(FontFactory.HELVETICA, 6)));
 		ArrayList<Alternativa> alternativas = Controladora.getAlternativas(idQ);
 		for (int i = 0; i < alternativas.size(); i++) {
-			nestedList.add(vwMontaQuestao.az(i).toLowerCase() + ") " +alternativas.get(i).getResposta());
+			nestedList.add(Alphabet.getLetra(i).toLowerCase() + ") " +alternativas.get(i).getResposta());
 		}
 		orderedList.add(nestedList);	
 	}
