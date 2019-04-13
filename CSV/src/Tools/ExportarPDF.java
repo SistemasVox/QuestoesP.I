@@ -28,6 +28,7 @@ import Model.Questoes;
 public class ExportarPDF {
 	private Document document = new Document();
 	private static ArrayList<Questoes> questoes;
+	private static String cor;
 		
 	
 	@SuppressWarnings("static-access")
@@ -38,7 +39,7 @@ public class ExportarPDF {
 	public void gerarPDF(){		
 		try {
 			CreateDirectory.CriarDiretorio("Questionários");
-			String cor = Cor.getCor(Aleatorio.getNum(Cor.getCores().size()));
+			cor = Cor.getCor(Aleatorio.getNum(Cor.getCores().size()));
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Questionários/Questionário_" + cor + ".pdf"));
 			document.open();
 			adcionarLogo(document);
@@ -114,7 +115,7 @@ public class ExportarPDF {
 			document.addAuthor("X-Quest");
 			document.addCreationDate();
 			document.addCreator("SistemasVOX");
-			document.addTitle("Questionário");
+			document.addTitle("Questionário " + cor);
 			document.addSubject("Questionário criado, por X-Quest.");
 			document.close();
 		} catch (Exception e) {
