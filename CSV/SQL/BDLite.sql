@@ -187,7 +187,6 @@ INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (1, 9);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (1, 10);
 
 -- História do Brasil - IV
-INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (2, 10);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (2, 11);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (2, 12);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (2, 13);
@@ -225,7 +224,6 @@ INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (5, 38);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (5, 39);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (5, 40);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (5, 41);
-INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (5, 36);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (5, 42);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (5, 43);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (5, 44);
@@ -423,9 +421,9 @@ INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (22, 201);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (22, 202);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (22, 203);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (22, 204);
+INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (22, 205);
 
 -- Os Vingadores 2: A Era de Ultron
-INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (23, 205);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (23, 206);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (23, 207);
 INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (23, 208);
