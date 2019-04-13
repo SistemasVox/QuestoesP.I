@@ -121,6 +121,7 @@ public class QuestoesDAO {
 			sql.append("SELECT DISTINCT * FROM Questoes q, Conteudo c, Conteudo_Questao cq\r\n" + 
 					"WHERE q.cod = cq.cod_questao and  cq.cod_conteudo = c.cod_conteudo and c.nome_conteudo = '"+nomeConteudo+"';");
 			rs = stmt.executeQuery(sql.toString());
+			//System.out.println(sql.toString());
 			while (rs.next()) {
 				temp.add(new Questoes(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
 			}
