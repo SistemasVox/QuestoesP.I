@@ -74,6 +74,9 @@ public class ExportarPDF {
 	    //Add ordered list
 		List orderedList = new List(List.ORDERED);
 		
+		
+		desordenarQuestoes();
+		
 		for (int i = 0; i < questoes.size(); i++) {		    
 		    orderedList.add(new ListItem(Controladora.consultarQuestao(questoes.get(i).getCod()).getEnunciado()));
 		    adcionarAlternativas(document, orderedList, questoes.get(i).getCod());
@@ -86,18 +89,40 @@ public class ExportarPDF {
 		}
 		
 	}
-
+	private static void desordenarQuestoes() {
+		ArrayList<Integer> integers = Aleatorio.gerarCombinacaoAleatorio(questoes.size(), questoes.size());
+		ArrayList<Questoes> questoesAUX = new ArrayList<Questoes>();
+		
+		for (int i = 0; i < integers.size(); i++) {
+			questoesAUX.add(questoes.get(integers.get(i)));
+		}
+		questoes.clear();
+		questoes = questoesAUX;
+	}
 	private static void adcionarAlternativas(Document document, List orderedList, String idQ) {
 		List nestedList = new List(List.UNORDERED);
 		List sublist = new List(true, false, 30);
 		sublist.setListSymbol(new Chunk("", FontFactory.getFont(FontFactory.HELVETICA, 6)));
-		ArrayList<Alternativa> alternativas = Controladora.getAlternativas(idQ);
+		
+		ArrayList<Alternativa> alternativas = Controladora.getAlternativas(idQ);		
+		alternativas = desordenarAlternativas(alternativas);
+		
 		for (int i = 0; i < alternativas.size(); i++) {
-			nestedList.add(Alphabet.getLetra(i).toLowerCase() + ") " +alternativas.get(i).getResposta());
+			nestedList.add(Alphabet.getLetra(i).toLowerCase() + ") " + alternativas.get(i).getResposta());
 		}
 		orderedList.add(nestedList);	
 	}
 
+	private static ArrayList<Alternativa> desordenarAlternativas(ArrayList<Alternativa> alternativas) {
+		ArrayList<Integer> integers = Aleatorio.gerarCombinacaoAleatorio(alternativas.size(), alternativas.size());
+		ArrayList<Alternativa> alternativasAUX = new ArrayList<Alternativa>();
+		
+		for (int i = 0; i < integers.size(); i++) {
+			alternativasAUX.add(alternativas.get(integers.get(i)));				
+		}
+		 return alternativasAUX;
+				
+	}
 	private static void adcionarLogo(Document document) {
 		try {
 		    //Add Image
