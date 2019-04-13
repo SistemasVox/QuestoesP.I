@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -19,16 +20,20 @@ import com.itextpdf.text.List;
 import com.itextpdf.text.ListItem;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import Controller.Controladora;
 import Model.Alternativa;
+import Model.Gabarito;
 import Model.Questoes;
 
 public class ExportarPDF {
 	private Document document = new Document();
 	private static ArrayList<Questoes> questoes;
 	private static String cor;
+	private static ArrayList<Gabarito> gabarito = new ArrayList<Gabarito>();;
 		
 	
 	@SuppressWarnings("static-access")
@@ -46,6 +51,7 @@ public class ExportarPDF {
 			//document.add(new Paragraph("A Hello World PDF document."));
 			adcionarQuestao(document);
 			fim(document);
+			imprimirGabarito(document);
 			propriedade(document);
 			document.close();
 			writer.close();
@@ -58,8 +64,56 @@ public class ExportarPDF {
 			System.out.println(e.getMessage());
 		}
 	}
+	private void imprimirGabarito(Document document) {
+		try {
+			PdfPTable table = new PdfPTable(2);	
+	        table.setWidthPercentage(100); //Width 100%
+	        table.setSpacingBefore(10f); //Space before table
+	        table.setSpacingAfter(10f); //Space after table
+	        
+	        //Set Column widths
+	        float[] columnWidths = {1f, 1f};
+	        table.setWidths(columnWidths);
+	        
+	        //Cabeçalho
+	        PdfPCell cell1 = new PdfPCell(new Paragraph("Questão"));
+	        cell1.setBorderColor(BaseColor.BLUE);
+	        cell1.setPaddingLeft(10);
+	        cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	 
+	        PdfPCell cell2 = new PdfPCell(new Paragraph("Alternativa"));
+	        cell2.setBorderColor(BaseColor.RED);
+	        cell2.setPaddingLeft(10);
+	        cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell1);
+	        table.addCell(cell2);
+	 
+	        for (int i = 0; i < gabarito.size(); i++) {
+		        PdfPCell cellQ = new PdfPCell(new Paragraph(gabarito.get(i).getQuestao()));
+		        cellQ.setBorderColor(BaseColor.BLUE);
+		        cellQ.setPaddingLeft(10);
+		        cellQ.setHorizontalAlignment(Element.ALIGN_CENTER);
+		        cellQ.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		 
+		        PdfPCell cellA = new PdfPCell(new Paragraph(gabarito.get(i).getAlternativa()));
+		        cellA.setBorderColor(BaseColor.RED);
+		        cellA.setPaddingLeft(10);
+		        cellA.setHorizontalAlignment(Element.ALIGN_CENTER);
+		        cellA.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		        table.addCell(cellQ);
+		        table.addCell(cellA);
+			}
+
+	        
+	        document.add(table);
+		} catch (Exception e) {
+			
+		}
+	}
 	private static void fim(Document document) {
-	    Paragraph chapterTitle = new Paragraph("FIM.", FontFactory.getFont(FontFactory.COURIER, 12, Font.BOLD, new CMYKColor(14, 12, 0, 84)));
+	    Paragraph chapterTitle = new Paragraph("Gabarito:", FontFactory.getFont(FontFactory.COURIER, 12, Font.BOLD, new CMYKColor(14, 12, 0, 84)));
 	    Chapter chapter1 = new Chapter(chapterTitle, 1);
 	    chapter1.setNumberDepth(0);	
 	    try {
@@ -79,7 +133,7 @@ public class ExportarPDF {
 		
 		for (int i = 0; i < questoes.size(); i++) {		    
 		    orderedList.add(new ListItem(Controladora.consultarQuestao(questoes.get(i).getCod()).getEnunciado()));
-		    adcionarAlternativas(document, orderedList, questoes.get(i).getCod());
+		    adcionarAlternativas(document, orderedList, questoes.get(i).getCod(), i);
 		}
 		
 		try {
@@ -92,14 +146,16 @@ public class ExportarPDF {
 	private static void desordenarQuestoes() {
 		ArrayList<Integer> integers = Aleatorio.gerarCombinacaoAleatorio(questoes.size(), questoes.size());
 		ArrayList<Questoes> questoesAUX = new ArrayList<Questoes>();
+		gabarito.clear();
 		
 		for (int i = 0; i < integers.size(); i++) {
 			questoesAUX.add(questoes.get(integers.get(i)));
+			gabarito.add(new Gabarito(String.valueOf(i + 1)));
 		}
 		questoes.clear();
 		questoes = questoesAUX;
 	}
-	private static void adcionarAlternativas(Document document, List orderedList, String idQ) {
+	private static void adcionarAlternativas(Document document, List orderedList, String idQ, int p) {
 		List nestedList = new List(List.UNORDERED);
 		List sublist = new List(true, false, 30);
 		sublist.setListSymbol(new Chunk("", FontFactory.getFont(FontFactory.HELVETICA, 6)));
@@ -109,6 +165,10 @@ public class ExportarPDF {
 		
 		for (int i = 0; i < alternativas.size(); i++) {
 			nestedList.add(Alphabet.getLetra(i).toLowerCase() + ") " + alternativas.get(i).getResposta());
+			if (alternativas.get(i).getClassificacao().equals("0")) {
+				gabarito.get(p).setAlternativa(String.valueOf(Alphabet.getLetra(i)));
+			}
+			
 		}
 		orderedList.add(nestedList);	
 	}
