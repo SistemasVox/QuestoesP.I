@@ -1,8 +1,10 @@
 package Tools;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -60,7 +62,15 @@ public class ExportarPDF {
 			writer.close();
 			
 			File arquivo = new File("Questionários/Questionário_" + cor + ".pdf");
-			JOptionPane.showMessageDialog(null, "Exportado com Sucesso.\n" + arquivo.getAbsolutePath());
+			if (JOptionPane.showConfirmDialog(null, "Exportado com Sucesso.\n" + arquivo.getAbsolutePath() +"\nDeseja Abrí-lo?") == 0) {
+		        Desktop desktop = Desktop.getDesktop();
+		        if(arquivo.exists())
+					try {
+						desktop.open(arquivo);
+					} catch (IOException e) {
+						JOptionPane.showMessageDialog(null, "Opps: " + e.getMessage());
+					}
+			}
 		} catch (DocumentException e) {
 			System.out.println(e.getMessage());
 		} catch (FileNotFoundException e) {
