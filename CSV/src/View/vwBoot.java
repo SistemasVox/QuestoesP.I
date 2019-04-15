@@ -21,7 +21,8 @@ public abstract class vwBoot {
 				JOptionPane.showMessageDialog(null, "["+file.getAbsolutePath()+"] não encontrado.\nPor favor, encontre o Banco de Questões e o Selecione.");
 				SelecionarAqr aqr = new SelecionarAqr();
 				aqr.main(null);
-				caminhoBD = aqr.s;				
+				caminhoBD = aqr.s;
+				//System.out.println(aqr.s);
 			}
 		} while (continuar);
 		

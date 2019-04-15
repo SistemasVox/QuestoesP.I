@@ -235,7 +235,7 @@ public class vwMontaQuestao extends JFrame {
 	}
 
 	protected void exportarPDF() {
-		ExportarPDF ex = new ExportarPDF(Controladora.consultarQuestoesC(cbxConte.getSelectedItem().toString()));
+		ExportarPDF ex = new ExportarPDF(cbxConte.getSelectedItem().toString());
 		ex.gerarPDF();
 		
 	}

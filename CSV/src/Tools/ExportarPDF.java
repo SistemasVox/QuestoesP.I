@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chapter;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -31,24 +30,28 @@ import Model.Questoes;
 
 public class ExportarPDF {
 	private Document document = new Document();
+	private static String nomeConteudo;
 	private static ArrayList<Questoes> questoes;
 	private static String cor;
 	private static ArrayList<Gabarito> gabarito = new ArrayList<Gabarito>();;
 		
 	
 	@SuppressWarnings("static-access")
-	public ExportarPDF(ArrayList<Questoes> questoes) {
-		super();
-		this.questoes = questoes;
+	public ExportarPDF(String nomeConteudo) {
+		this.nomeConteudo = nomeConteudo;
 	}
-	public void gerarPDF(){		
+	public void gerarPDF(){
 		try {
 			CreateDirectory.CriarDiretorio("Questionários");
 			cor = Cor.getCor(Aleatorio.getNum(Cor.getCores().size()));
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Questionários/Questionário_" + cor + ".pdf"));
 			document.open();
 			adcionarLogo(document);
-			//document.add(new Paragraph("A Hello World PDF document."));
+			
+			Paragraph preface = new Paragraph("Conteúdo: " + nomeConteudo +".\n\n"); 
+			preface.setAlignment(Element.ALIGN_CENTER);
+			
+			document.add(preface);
 			adcionarQuestao(document);
 			fim(document);
 			imprimirGabarito(document);
@@ -127,13 +130,12 @@ public class ExportarPDF {
 	private static void adcionarQuestao(Document document) {
 	    //Add ordered list
 		List orderedList = new List(List.ORDERED);
-		
+		questoes = Controladora.consultarQuestoesC(nomeConteudo);		
 		
 		desordenarQuestoes();
 		
 		for (int i = 0; i < questoes.size(); i++) {		    
-		    orderedList.add(new ListItem(Controladora.consultarQuestao(questoes.get(i).getCod()).getEnunciado()));
-		    adcionarAlternativas(document, orderedList, questoes.get(i).getCod(), i);
+		    orderedList.add(new ListItem(Controladora.consultarQuestao(questoes.get(i).getCod()).getEnunciado() + getAlternativas(questoes.get(i).getCod(), i) + "\n"));
 		}
 		
 		try {
@@ -155,22 +157,21 @@ public class ExportarPDF {
 		questoes.clear();
 		questoes = questoesAUX;
 	}
-	private static void adcionarAlternativas(Document document, List orderedList, String idQ, int p) {
-		List nestedList = new List(List.UNORDERED);
-		List sublist = new List(true, false, 30);
-		sublist.setListSymbol(new Chunk("", FontFactory.getFont(FontFactory.HELVETICA, 6)));
-		
-		ArrayList<Alternativa> alternativas = Controladora.getAlternativas(idQ);		
+	
+	private static String getAlternativas(String idQ, int p) {			
+		ArrayList<Alternativa> alternativas = Controladora.getAlternativas(idQ);
 		alternativas = desordenarAlternativas(alternativas);
+		String alternativasS = "\n\n";
 		
 		for (int i = 0; i < alternativas.size(); i++) {
-			nestedList.add(Alphabet.getLetra(i).toLowerCase() + ") " + alternativas.get(i).getResposta());
+			alternativasS += Alphabet.getLetra(i).toLowerCase() + ") " + alternativas.get(i).getResposta() + "\n";
+			
 			if (alternativas.get(i).getClassificacao().equals("0")) {
 				gabarito.get(p).setAlternativa(String.valueOf(Alphabet.getLetra(i)));
 			}
 			
 		}
-		orderedList.add(nestedList);	
+		return alternativasS;
 	}
 
 	private static ArrayList<Alternativa> desordenarAlternativas(ArrayList<Alternativa> alternativas) {
