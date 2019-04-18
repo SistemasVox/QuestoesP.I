@@ -32,6 +32,8 @@ import Model.Questoes;
 
 public class ExportarPDF {
 	private Document document = new Document();
+	private static String alternativasFormatacao;
+	private static boolean letraMaiuscula;
 	private static String nomeConteudo;
 	private static ArrayList<Questoes> questoes;
 	private static String cor;
@@ -39,8 +41,10 @@ public class ExportarPDF {
 		
 	
 	@SuppressWarnings("static-access")
-	public ExportarPDF(String nomeConteudo) {
+	public ExportarPDF(String nomeConteudo, String alternativasFormatacao, boolean letraMaiuscula) {
 		this.nomeConteudo = nomeConteudo;
+		this.alternativasFormatacao = alternativasFormatacao;
+		this.letraMaiuscula = letraMaiuscula;
 	}
 	public void gerarPDF(){
 		try {
@@ -174,7 +178,11 @@ public class ExportarPDF {
 		String alternativasS = "\n\n";
 		
 		for (int i = 0; i < alternativas.size(); i++) {
-			alternativasS += Alphabet.getLetra(i).toLowerCase() + ") " + alternativas.get(i).getResposta() + "\n";
+			if (letraMaiuscula) {
+				alternativasS += Alphabet.getLetra(i) + alternativasFormatacao + alternativas.get(i).getResposta() + "\n";
+			} else {
+				alternativasS += Alphabet.getLetra(i).toLowerCase() + alternativasFormatacao + alternativas.get(i).getResposta() + "\n";
+			}
 			
 			if (alternativas.get(i).getClassificacao().equals("0")) {
 				gabarito.get(p).setAlternativa(String.valueOf(Alphabet.getLetra(i)));

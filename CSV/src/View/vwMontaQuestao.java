@@ -10,15 +10,12 @@ import javax.swing.border.EmptyBorder;
 import Controller.Controladora;
 import Model.Alternativa;
 import Model.Area_Conhecimento;
-import Model.Conteudo;
 import Model.Disciplina;
 import Model.Questoes;
 import Tools.Alphabet;
 import Tools.ExportarPDF;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
@@ -26,35 +23,23 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 
 public class vwMontaQuestao extends JFrame {
-
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblA, lblQ;
 	private JButton bntMontar, btnTop, btnDetalhes;
 	private static JTextArea txtArea;
-	private JScrollPane scrollQ, scrollA, scrollArea;
-	private String eliminar;
-	private ArrayList<String> listaAlternativas = new ArrayList<String>();
+	private JScrollPane scrollArea;
 	private JButton btnSair;
-	private static final int alfabeto = 26;
 	private final ButtonGroup letras = new ButtonGroup();
 	private final ButtonGroup formatacao = new ButtonGroup();
-	private JComboBox cbxA;
-	private JComboBox cbxDisc;
-	private JComboBox cbxConte;
+	private JComboBox cbxA, cbxDisc, cbxConte;
 	private JRadioButton rbMai;
 	private JRadioButton rbMin;
 	private JRadioButton rbPare;
@@ -235,10 +220,11 @@ public class vwMontaQuestao extends JFrame {
 	}
 
 	protected void exportarPDF() {
-		ExportarPDF ex = new ExportarPDF(cbxConte.getSelectedItem().toString());
+		ExportarPDF ex = new ExportarPDF(cbxConte.getSelectedItem().toString(), formatacaoA(), rbMai.isSelected());
 		ex.gerarPDF();
 		
 	}
+	@SuppressWarnings("unchecked")
 	private void atualizarConteudo() {
 		cbxConte.removeAllItems();
 		limpaarea();
@@ -361,12 +347,6 @@ public class vwMontaQuestao extends JFrame {
 	
 	protected void limpar() {
 		scrollArea.getVerticalScrollBar().setValue(0);
-	}
-
-	private void liberarbotao() {
-		btnTop.setEnabled(true);
-		btnDetalhes.setEnabled(true);
-
 	}
 
 	private void atualizarLBL() {

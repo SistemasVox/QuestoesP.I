@@ -31,6 +31,7 @@ import javax.swing.ButtonGroup;
 
 public class vwCadastrarQuestoes extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblA, lblQ;
 	private JButton bntMontar, btnLimpar, btnSalvar;

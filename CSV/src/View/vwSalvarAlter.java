@@ -1,6 +1,5 @@
 package View;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -12,7 +11,6 @@ import Model.Alternativa;
 import Model.Questoes;
 
 import javax.swing.JScrollPane;
-import java.awt.Component;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -28,18 +26,17 @@ import java.awt.event.ActionEvent;
 
 public class vwSalvarAlter extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextArea txtQ, txtQA;
 	private int i = 0;
 	
 	private String Enunciado;
-	private String[] ae = { "A) ", "B) ", "C) ", "D) ", "E) " };
 	private ArrayList<String> listaAlternativas;
-	private JComboBox comboBox;
+	@SuppressWarnings("rawtypes")
+	private JComboBox comboBox, cbxDifi;
 	 vwCadastrarQuestoes vwHome;
-	private JComboBox cbxDifi;
-	private JScrollPane scrollArea;
-	private JScrollPane scrollQA;
+	private JScrollPane scrollArea, scrollQA;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
