@@ -20,6 +20,7 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.List;
 import com.itextpdf.text.ListItem;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -93,14 +94,14 @@ public class ExportarPDF {
 	        table.setWidths(columnWidths);
 	        
 	        //Cabeçalho
-	        PdfPCell cell1 = new PdfPCell(new Paragraph("Questão"));
-	        cell1.setBorderColor(BaseColor.BLUE);
+	        PdfPCell cell1 = new PdfPCell(new Paragraph("Questão.", new Font(FontFamily.TIMES_ROMAN, 16, 1)));
+	        cell1.setBorderColor(BaseColor.BLACK);
 	        cell1.setPaddingLeft(10);
 	        cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	 
-	        PdfPCell cell2 = new PdfPCell(new Paragraph("Alternativa"));
-	        cell2.setBorderColor(BaseColor.RED);
+	        PdfPCell cell2 = new PdfPCell(new Paragraph("Alternativa Correta.", new Font(FontFamily.TIMES_ROMAN, 16, 1)));
+	        cell2.setBorderColor(BaseColor.BLACK);
 	        cell2.setPaddingLeft(10);
 	        cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -108,17 +109,24 @@ public class ExportarPDF {
 	        table.addCell(cell2);
 	 
 	        for (int i = 0; i < gabarito.size(); i++) {
-		        PdfPCell cellQ = new PdfPCell(new Paragraph(gabarito.get(i).getQuestao()));
-		        cellQ.setBorderColor(BaseColor.BLUE);
+		        PdfPCell cellQ = new PdfPCell(new Paragraph(gabarito.get(i).getQuestao(), new Font(FontFamily.TIMES_ROMAN, 14, 1)));
+		        cellQ.setBorderColor(BaseColor.BLACK);
 		        cellQ.setPaddingLeft(10);
 		        cellQ.setHorizontalAlignment(Element.ALIGN_CENTER);
 		        cellQ.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		        if (i % 2 != 0) {
+		        	cellQ.setBackgroundColor(new CMYKColor(0, 0, 0, 37));
+				}
 		 
-		        PdfPCell cellA = new PdfPCell(new Paragraph(gabarito.get(i).getAlternativa()));
-		        cellA.setBorderColor(BaseColor.RED);
+		        PdfPCell cellA = new PdfPCell(new Paragraph(gabarito.get(i).getAlternativa(), new Font(FontFamily.TIMES_ROMAN, 14, 1)));
+		        cellA.setBorderColor(BaseColor.BLACK);
 		        cellA.setPaddingLeft(10);
 		        cellA.setHorizontalAlignment(Element.ALIGN_CENTER);
 		        cellA.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		        if (i % 2 != 0) {
+		        	cellA.setBackgroundColor(new CMYKColor(0, 0, 0, 37));
+				}
+		        
 		        table.addCell(cellQ);
 		        table.addCell(cellA);
 			}
