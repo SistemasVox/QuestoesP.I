@@ -134,4 +134,29 @@ public class QuestoesDAO {
 		}
 		return null;
 	}
+	public static ArrayList<Questoes> getQuestoesC(String nomeConteudo) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder();
+		ArrayList<Questoes> temp = new ArrayList<Questoes>();
+		
+		try {
+			Connection c = FabricaConexao.conectarSQLITE();
+			stmt = c.createStatement();
+			sql.append("SELECT DISTINCT * FROM Questoes q, Conteudo c, Conteudo_Questao cq\r\n" + 
+					"WHERE q.cod = cq.cod_questao and  cq.cod_conteudo = c.cod_conteudo and c.nome_conteudo like '%"+nomeConteudo+"%';");
+			rs = stmt.executeQuery(sql.toString());
+			//System.out.println(sql.toString());
+			while (rs.next()) {
+				temp.add(new Questoes(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+			}
+			c.close();
+			return temp;
+		} catch (Exception e) {
+			//vwHomeLoto.mensagem(e.getClass().getName() + ": " + e.getMessage());
+			JOptionPane.showMessageDialog(null, "ERRO: Na Classe MegaDAO, no método consultarTotalQ();\n\n" + e.getMessage());
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
 }

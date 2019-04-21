@@ -51,4 +51,10 @@ public class Controladora {
 	public static String consultarTotalQ(String nomeConteudo) {
 		return  QuestoesDAO.consultarTotalQ(nomeConteudo);
 	}
+	public static ArrayList<Questoes> getQuestoes(String nomeConteudo) {
+		return  QuestoesDAO.getQuestoesC(nomeConteudo);
+	}
+	public static ArrayList<String> getConteudos(String nomeConteudo) {
+		return ConteudoDAO.getConteudos(nomeConteudo);
+	}
 }

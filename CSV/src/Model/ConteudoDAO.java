@@ -33,5 +33,27 @@ public class ConteudoDAO {
 		}
 		return null;
 	}
+	public static ArrayList<String> getConteudos(String nomeConte) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		ArrayList<String> conteudos = new ArrayList<String>();
+		StringBuilder sql = new StringBuilder();
+		try {
+			Connection c = FabricaConexao.conectarSQLITE();
+			stmt = c.createStatement();
+			sql.append("SELECT * FROM Conteudo WHERE nome_conteudo like '%"+ nomeConte + "%';");
+			rs = stmt.executeQuery(sql.toString());
+			while (rs.next()) {
+				conteudos.add(rs.getString(2));
+			}
+			c.close();
+
+			return conteudos;
+		} catch (Exception e) {
+			System.out.println(sql.toString());
+			JOptionPane.showMessageDialog(null, "ERRO: Na Classe QuestoesDAO, no método consultarConteudos(String nomeDisc):\n" + e.getMessage());
+		}
+		return null;
+	}
 
 }
