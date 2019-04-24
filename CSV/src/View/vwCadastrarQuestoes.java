@@ -60,7 +60,7 @@ public class vwCadastrarQuestoes extends JFrame {
 	}
 	public vwCadastrarQuestoes() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 937, 722);
+		setBounds(100, 100, 937, 740);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -90,7 +90,7 @@ public class vwCadastrarQuestoes extends JFrame {
 		txtArea.setLineWrap(true);
 
 		contentPane.add(this.scrollArea = new JScrollPane(txtArea));
-		scrollArea.setBounds(10, 319, 713, 354);
+		scrollArea.setBounds(10, 337, 713, 354);
 
 		btnSalvar = new JButton("Salvar Quest\u00E3o");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -98,11 +98,11 @@ public class vwCadastrarQuestoes extends JFrame {
 				salvar();
 			}
 		});
-		btnSalvar.setBounds(741, 448, 159, 46);
+		btnSalvar.setBounds(735, 464, 159, 46);
 		contentPane.add(btnSalvar);
 
 		btnLimpar = new JButton("Limpar Campos");
-		btnLimpar.setBounds(741, 344, 159, 46);
+		btnLimpar.setBounds(735, 360, 159, 46);
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				limpar();
@@ -138,10 +138,10 @@ public class vwCadastrarQuestoes extends JFrame {
 		txtA.setToolTipText("Informe as Alternativas?");
 
 		contentPane.add(this.scrollA = new JScrollPane(txtA));
-		scrollA.setBounds(10, 136, 907, 165);
+		scrollA.setBounds(10, 150, 907, 165);
 
 		bntMontar = new JButton("Montar Quest\u00E3o");
-		bntMontar.setBounds(741, 396, 159, 46);
+		bntMontar.setBounds(735, 412, 159, 46);
 		bntMontar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				montarQuestao();
@@ -155,7 +155,7 @@ public class vwCadastrarQuestoes extends JFrame {
 				listarQuestoes();
 			}
 		});
-		btnListar.setBounds(741, 501, 159, 46);
+		btnListar.setBounds(735, 517, 159, 46);
 		contentPane.add(btnListar);
 
 		JButton btnExpor = new JButton("Exportar CSV");
@@ -165,7 +165,7 @@ public class vwCadastrarQuestoes extends JFrame {
 				export.setVisible(true);
 			}
 		});
-		btnExpor.setBounds(741, 558, 159, 46);
+		btnExpor.setBounds(735, 574, 159, 46);
 		contentPane.add(btnExpor);
 
 		btnSair = new JButton("Sair");
@@ -174,24 +174,34 @@ public class vwCadastrarQuestoes extends JFrame {
 				dispose();
 			}
 		});
-		btnSair.setBounds(741, 615, 159, 46);
+		btnSair.setBounds(735, 631, 159, 46);
 		contentPane.add(btnSair);
 		
 		JLabel lblEliminar = new JLabel("Eliminar:");
 		lblEliminar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblEliminar.setBounds(716, 300, 64, 14);
+		lblEliminar.setBounds(710, 316, 64, 14);
 		contentPane.add(lblEliminar);
 		
 		rdP = new JRadioButton("Parenteses");
 		buttonGroup.add(rdP);
 		rdP.setSelected(true);
-		rdP.setBounds(729, 320, 109, 23);
+		rdP.setBounds(723, 336, 109, 23);
 		contentPane.add(rdP);
 		
 		rbS = new JRadioButton("Espa\u00E7o");
-		rbS.setBounds(840, 320, 109, 23);
+		rbS.setBounds(834, 336, 109, 23);
 		contentPane.add(rbS);
 		buttonGroup.add(rbS);
+		
+		JLabel lblEnunciado = new JLabel("Enunciado:");
+		lblEnunciado.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblEnunciado.setBounds(10, 43, 76, 14);
+		contentPane.add(lblEnunciado);
+		
+		JLabel lblAlternativas = new JLabel("Alternativas:");
+		lblAlternativas.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblAlternativas.setBounds(10, 136, 76, 14);
+		contentPane.add(lblAlternativas);
 		atualizarLBL();
 		bloquearBotao();
 	}
