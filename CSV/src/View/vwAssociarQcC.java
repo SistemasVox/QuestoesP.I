@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controller.Controladora;
+import Model.Area_Conhecimento;
+import Model.Disciplina;
 import Model.Questoes;
 import Tools.Alphabet;
 
@@ -31,6 +33,8 @@ public class vwAssociarQcC extends JFrame {
 	private JComboBox<String> cbxQ;
 	private JComboBox cbxC;
 	private JTextArea textArea;
+	private JComboBox cbxA;
+	private JComboBox cbxDisc;
 
 	/**
 	 * Launch the application.
@@ -53,14 +57,14 @@ public class vwAssociarQcC extends JFrame {
 	 */
 	public vwAssociarQcC() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 754, 560);
+		setBounds(100, 100, 754, 614);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane((Component) null);
-		scrollPane.setBounds(10, 198, 534, 317);
+		scrollPane.setBounds(10, 252, 534, 317);
 		contentPane.add(scrollPane);
 		
 		textArea = new JTextArea();
@@ -70,41 +74,66 @@ public class vwAssociarQcC extends JFrame {
 		textArea.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
 		scrollPane.setViewportView(textArea);
 		
-		JLabel lblQuesto = new JLabel("Quest\u00E3o:");
-		lblQuesto.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
-		lblQuesto.setBounds(10, 172, 100, 14);
-		contentPane.add(lblQuesto);
-		
 		cbxQ = new JComboBox();
-		cbxQ.setBounds(91, 164, 644, 32);
-		cbxQ.addItemListener(new ItemListener() {
+		cbxQ.setBounds(91, 218, 644, 32);
+		JLabel lblXquestAssociarQuestes = new JLabel("X-Quest, Associar Quest\u00F5es com Conte\u00FAdo.");
+		lblXquestAssociarQuestes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblXquestAssociarQuestes.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		lblXquestAssociarQuestes.setBounds(0, 11, 735, 57);
+		contentPane.add(lblXquestAssociarQuestes);
+		
+		cbxA = new JComboBox();
+		cbxA.addItemListener(new ItemListener() {
 	        public void itemStateChanged(ItemEvent arg0) {
-	        	atualizaArea();
+	        	atualizarDisciplinas();
 	        }
 	    });
-		contentPane.add(cbxQ);
+		cbxA.setBounds(164, 93, 571, 32);
+		contentPane.add(cbxA);		
+
 		
-		JComboBox cbxDisc = new JComboBox();
-		cbxDisc.setBounds(91, 79, 644, 32);
+		JLabel label = new JLabel("\u00C1rea do Conhecimento:");
+		label.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
+		label.setBounds(10, 102, 159, 14);
+		contentPane.add(label);
+		
+		cbxDisc = new JComboBox();
+		cbxDisc.addItemListener(new ItemListener() {
+	        public void itemStateChanged(ItemEvent arg0) {
+	        	atualizarConteudo();
+	        }
+	    });
+		cbxDisc.setBounds(91, 133, 644, 32);
 		contentPane.add(cbxDisc);
 		
+		JLabel lblDisciplina = new JLabel("Disciplina:");
+		lblDisciplina.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
+		lblDisciplina.setBounds(10, 141, 100, 14);
+		contentPane.add(lblDisciplina);
+		
 		cbxC = new JComboBox();
-		cbxC.setBounds(91, 122, 644, 31);
+		cbxC.setBounds(91, 176, 644, 31);
 		contentPane.add(cbxC);
 		
 		JLabel label_1 = new JLabel("Conte\u00FAdo:");
 		label_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
-		label_1.setBounds(10, 131, 100, 14);
+		label_1.setBounds(10, 185, 100, 14);
 		contentPane.add(label_1);
+		contentPane.add(cbxQ);
+		
+		JLabel lblQuesto = new JLabel("Quest\u00E3o:");
+		lblQuesto.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
+		lblQuesto.setBounds(10, 226, 100, 14);
+		contentPane.add(lblQuesto);
 		
 		JButton btnSubirBarraDe = new JButton("Associar");
 		btnSubirBarraDe.setToolTipText("Associar a quest\u00E3o, com o Conte\u00FAdo.");
-		btnSubirBarraDe.setBounds(554, 198, 181, 46);
+		btnSubirBarraDe.setBounds(554, 252, 181, 46);
 		contentPane.add(btnSubirBarraDe);
 		
 		JButton btnVerQuestesSem = new JButton("Quest\u00F5es Sem Associa\u00E7\u00E3o.");
 		btnVerQuestesSem.setToolTipText("Quest\u00F5es Sem Associa\u00E7\u00E3o.");
-		btnVerQuestesSem.setBounds(554, 250, 181, 46);
+		btnVerQuestesSem.setBounds(554, 304, 181, 46);
 		contentPane.add(btnVerQuestesSem);
 		
 		JButton btnVerTodasQuestes = new JButton("Ver Todas Quest\u00F5es.");
@@ -113,16 +142,16 @@ public class vwAssociarQcC extends JFrame {
 				carregarTodasQuestoes();
 			}
 		});
-		btnVerTodasQuestes.setBounds(554, 302, 181, 46);
+		btnVerTodasQuestes.setBounds(554, 356, 181, 46);
 		contentPane.add(btnVerTodasQuestes);
 		
 		JButton btnCadastrarContedo = new JButton("Cadastrar Conte\u00FAdo");
 		btnCadastrarContedo.setToolTipText("Cadastrar Novo Conte\u00FAdo");
-		btnCadastrarContedo.setBounds(554, 355, 181, 46);
+		btnCadastrarContedo.setBounds(554, 409, 181, 46);
 		contentPane.add(btnCadastrarContedo);
 		
 		JButton button_4 = new JButton("Voltar Menu Principal.");
-		button_4.setBounds(554, 412, 181, 46);
+		button_4.setBounds(554, 466, 181, 46);
 		contentPane.add(button_4);
 		
 		JButton button_5 = new JButton("Sair");
@@ -131,19 +160,32 @@ public class vwAssociarQcC extends JFrame {
 				dispose();
 			}
 		});
-		button_5.setBounds(554, 469, 181, 46);
+		button_5.setBounds(554, 523, 181, 46);
 		contentPane.add(button_5);
 		
-		JLabel lblXquestAssociarQuestes = new JLabel("X-Quest, Associar Quest\u00F5es com Conte\u00FAdo.");
-		lblXquestAssociarQuestes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblXquestAssociarQuestes.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
-		lblXquestAssociarQuestes.setBounds(0, 11, 735, 57);
-		contentPane.add(lblXquestAssociarQuestes);
+		atualizarAreaConhecimento();	
 		
-		JLabel lblDisciplina = new JLabel("Disciplina:");
-		lblDisciplina.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
-		lblDisciplina.setBounds(10, 87, 100, 14);
-		contentPane.add(lblDisciplina);
+	}
+	
+	private void atualizarAreaConhecimento() {
+		cbxA.removeAllItems();
+		ArrayList<Area_Conhecimento> areas = Controladora.consultarAreas();
+		for (int i = 0; i < areas.size(); i++) {
+			cbxA.addItem((i +1 ) + ") "+ areas.get(i).getNome());
+		}
+		atualizarDisciplinas();
+	}
+	private void atualizarDisciplinas() {
+		cbxDisc.removeAllItems();
+		ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();		
+		try {			
+			disciplinas = Controladora.consultarDisciplinas(cbxA.getSelectedItem().toString().substring(3, cbxA.getSelectedItem().toString().length()));	
+			for (int i = 0; i < disciplinas.size(); i++) {
+				cbxDisc.addItem((i +1 ) + ") "+ disciplinas.get(i).getNome());
+			}	
+		} catch (Exception e) {
+			System.out.println("Disciplina: " + e.getMessage());
+		}	
 	}
 
 	protected void atualizaArea() {
@@ -166,11 +208,16 @@ public class vwAssociarQcC extends JFrame {
 		
 	}
 
-	private void atualizarConteudo() {		
+	private void atualizarConteudo() {
 		cbxC.removeAllItems();
-		ArrayList<String> conteudos = Controladora.getConteudos("");
-		for (int i = 0; i < conteudos.size(); i++) {
-			cbxC.addItem((i +1) + ") "+conteudos.get(i));
+		ArrayList<String> conteudos = new ArrayList<String>();
+		try {
+			conteudos = Controladora.consultarConteudos(cbxDisc.getSelectedItem().toString().substring(3, cbxDisc.getSelectedItem().toString().length()));	
+			for (int i = 0; i < conteudos.size(); i++) {
+				cbxC.addItem((i +1 ) + ") "+ conteudos.get(i));
+			}
+		} catch (Exception e) {
+			System.out.println("Conteúdo: " + e.getMessage());
 		}
 	}
 

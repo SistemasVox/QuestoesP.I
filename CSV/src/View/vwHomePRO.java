@@ -32,7 +32,7 @@ public class vwHomePRO extends JFrame {
 
 	public vwHomePRO() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 531, 227);
+		setBounds(100, 100, 531, 366);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -65,5 +65,20 @@ public class vwHomePRO extends JFrame {
 		lblXquest.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 		lblXquest.setBounds(10, 0, 495, 57);
 		contentPane.add(lblXquest);
+		
+		JButton btnAsso = new JButton("Associar Quest\u00F5es");
+		btnAsso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new vwAssociarQcC().setVisible(true);
+			}
+		});
+		btnAsso.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
+		btnAsso.setBounds(10, 196, 242, 130);
+		contentPane.add(btnAsso);
+		
+		JButton btnCadastrarContedo = new JButton("Cadastrar Conte\u00FAdo");
+		btnCadastrarContedo.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
+		btnCadastrarContedo.setBounds(263, 196, 242, 130);
+		contentPane.add(btnCadastrarContedo);
 	}
 }
