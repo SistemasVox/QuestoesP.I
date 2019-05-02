@@ -14,6 +14,8 @@ import Model.Questoes;
 import Tools.Alphabet;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
@@ -75,6 +77,15 @@ public class vwAssociarQcC extends JFrame {
 		scrollPane.setViewportView(textArea);
 		
 		cbxQ = new JComboBox();
+		cbxQ.addItemListener(new ItemListener() {
+	        public void itemStateChanged(ItemEvent arg0) {
+	        	try {
+	        		cbxQ.setToolTipText(cbxQ.getSelectedItem().toString());
+		        	atualizaArea();
+				} catch (Exception e) {
+				}
+	        }
+	    });
 		cbxQ.setBounds(91, 218, 644, 32);
 		JLabel lblXquestAssociarQuestes = new JLabel("X-Quest, Associar Quest\u00F5es com Conte\u00FAdo.");
 		lblXquestAssociarQuestes.setHorizontalAlignment(SwingConstants.CENTER);
@@ -127,11 +138,21 @@ public class vwAssociarQcC extends JFrame {
 		contentPane.add(lblQuesto);
 		
 		JButton btnSubirBarraDe = new JButton("Associar");
+		btnSubirBarraDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				associarQuestaoConteudo();
+			}
+		});
 		btnSubirBarraDe.setToolTipText("Associar a quest\u00E3o, com o Conte\u00FAdo.");
 		btnSubirBarraDe.setBounds(554, 252, 181, 46);
 		contentPane.add(btnSubirBarraDe);
 		
 		JButton btnVerQuestesSem = new JButton("Quest\u00F5es Sem Associa\u00E7\u00E3o.");
+		btnVerQuestesSem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				preencherQuestoesNovas();
+			}
+		});
 		btnVerQuestesSem.setToolTipText("Quest\u00F5es Sem Associa\u00E7\u00E3o.");
 		btnVerQuestesSem.setBounds(554, 304, 181, 46);
 		contentPane.add(btnVerQuestesSem);
@@ -167,6 +188,21 @@ public class vwAssociarQcC extends JFrame {
 		
 	}
 	
+	protected void associarQuestaoConteudo() {
+		if (JOptionPane.showConfirmDialog(null, "Tem certeza que deseja associar:\n" + cbxQ.getSelectedItem().toString() + "\nAo conteúdo:\n" + cbxC.getSelectedItem().toString()) == 0) {
+			
+			preencherQuestoesNovas();
+		}		
+	}
+
+	protected void preencherQuestoesNovas() {
+		cbxQ.removeAllItems();
+		ArrayList<Questoes> questoes = Controladora.getQuestoesSemAssociacao();	
+		for (int i = 0; i < questoes.size(); i++) {
+			cbxQ.addItem(questoes.get(i).getCod() +") " + questoes.get(i).getEnunciado());
+		}				
+	}
+
 	private void atualizarAreaConhecimento() {
 		cbxA.removeAllItems();
 		ArrayList<Area_Conhecimento> areas = Controladora.consultarAreas();

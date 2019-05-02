@@ -57,4 +57,7 @@ public class Controladora {
 	public static ArrayList<String> getConteudos(String nomeConteudo) {
 		return ConteudoDAO.getConteudos(nomeConteudo);
 	}
+	public static ArrayList<Questoes> getQuestoesSemAssociacao() {
+		return QuestoesDAO.getQuestoesSemAssociacao();
+	}
 }

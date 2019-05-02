@@ -454,3 +454,8 @@ INSERT INTO Conteudo_Questao (cod_conteudo, cod_questao) VALUES (26, 225);
 -- Junção de Tabelas
 SELECT DISTINCT * FROM Questoes q, Conteudo c, Conteudo_Questao cq
 WHERE q.cod = cq.cod_questao and  cq.cod_conteudo = c.cod_conteudo and c.nome_conteudo = 'Matemática Básica - VII';
+
+SELECT * FROM [Questoes] WHERE [cod] NOT IN (SELECT [cod_questao] FROM [Conteudo_Questao]);
+
+SELECT DISTINCT COUNT(*) FROM Questoes q, Conteudo c, Conteudo_Questao cq
+WHERE q.cod = cq.cod_questao and  cq.cod_conteudo = c.cod_conteudo and c.cod_conteudo = '13' and q.cod = '12';

@@ -153,8 +153,31 @@ public class QuestoesDAO {
 			c.close();
 			return temp;
 		} catch (Exception e) {
-			//vwHomeLoto.mensagem(e.getClass().getName() + ": " + e.getMessage());
-			JOptionPane.showMessageDialog(null, "ERRO: Na Classe MegaDAO, no método consultarTotalQ();\n\n" + e.getMessage());
+			JOptionPane.showMessageDialog(null, "ERRO: Na Classe QuestoesDAO, no método getQuestoesC(String nomeConteudo);\n\n" + e.getMessage());
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+
+	public static ArrayList<Questoes> getQuestoesSemAssociacao() {
+		Statement stmt = null;
+		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder();
+		ArrayList<Questoes> temp = new ArrayList<Questoes>();
+		
+		try {
+			Connection c = FabricaConexao.conectarSQLITE();
+			stmt = c.createStatement();
+			sql.append("SELECT * FROM [Questoes] WHERE [cod] NOT IN (SELECT [cod_questao] FROM [Conteudo_Questao]);");
+			rs = stmt.executeQuery(sql.toString());
+			//System.out.println(sql.toString());
+			while (rs.next()) {
+				temp.add(new Questoes(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+			}
+			c.close();
+			return temp;
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERRO: Na Classe QuestoesDAO, no método getQuestoesC(String nomeConteudo);\n\n" + e.getMessage());
 			System.out.println(e.getMessage());
 		}
 		return null;
