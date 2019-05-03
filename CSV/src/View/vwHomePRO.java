@@ -77,6 +77,11 @@ public class vwHomePRO extends JFrame {
 		contentPane.add(btnAsso);
 		
 		JButton btnCadastrarContedo = new JButton("Cadastrar Conte\u00FAdo");
+		btnCadastrarContedo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new vwConteudo().setVisible(true);
+			}
+		});
 		btnCadastrarContedo.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 18));
 		btnCadastrarContedo.setBounds(263, 196, 242, 130);
 		contentPane.add(btnCadastrarContedo);

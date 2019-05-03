@@ -19,7 +19,7 @@ public class DisciplinaDAO {
 		try {
 			Connection c = FabricaConexao.conectarSQLITE();
 			stmt = c.createStatement();
-			sql.append("SELECT * FROM Disciplina WHERE cod_area = (SELECT cod_area FROM Area_Conhecimento WHERE nome_area = '" + nomeArea + "');");
+			sql.append("SELECT * FROM Disciplina WHERE cod_area = (SELECT cod_area FROM Area_Conhecimento WHERE nome_area like '" + nomeArea + "');");
 			rs = stmt.executeQuery(sql.toString());
 			while (rs.next()) {
 				disciplinas.add(new Disciplina(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
@@ -29,7 +29,30 @@ public class DisciplinaDAO {
 			return disciplinas;
 		} catch (Exception e) {
 			System.out.println(sql.toString());
-			JOptionPane.showMessageDialog(null, "ERRO: Na Classe QuestoesDAO, no método consultarQuestao(String id):\n" + e.getMessage());
+			JOptionPane.showMessageDialog(null, "ERRO: Na Classe DisciplinaDAO, no método consultarDisciplinas(String nomeArea):\n" + e.getMessage());
+		}
+		return null;
+	}
+	
+	public static ArrayList<Disciplina> consultarTodasDisciplinas() {
+		Statement stmt = null;
+		ResultSet rs = null;
+		ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
+		StringBuilder sql = new StringBuilder();
+		try {
+			Connection c = FabricaConexao.conectarSQLITE();
+			stmt = c.createStatement();
+			sql.append("SELECT * FROM Disciplina;");
+			rs = stmt.executeQuery(sql.toString());
+			while (rs.next()) {
+				disciplinas.add(new Disciplina(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+			}
+			c.close();
+
+			return disciplinas;
+		} catch (Exception e) {
+			System.out.println(sql.toString());
+			JOptionPane.showMessageDialog(null, "ERRO: Na Classe DisciplinaDAO, no método consultarDisciplinas(String nomeArea):\n" + e.getMessage());
 		}
 		return null;
 	}

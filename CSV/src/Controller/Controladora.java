@@ -45,6 +45,9 @@ public class Controladora {
 	public static ArrayList<Disciplina> consultarDisciplinas(String nomeArea) {
 		return DisciplinaDAO.consultarDisciplinas(nomeArea);
 	}
+	public static ArrayList<Disciplina> consultarTodasDisciplinas() {
+		return DisciplinaDAO.consultarTodasDisciplinas();
+	}
 	public static ArrayList<Conteudo> consultarConteudos(String nomeDisc) {
 		return ConteudoDAO.consultarConteudos(nomeDisc);
 	}
@@ -54,7 +57,7 @@ public class Controladora {
 	public static ArrayList<Questoes> getQuestoes(String nomeConteudo) {
 		return  QuestoesDAO.getQuestoesC(nomeConteudo);
 	}
-	public static ArrayList<String> getConteudos(String nomeConteudo) {
+	public static ArrayList<Conteudo> getConteudos(String nomeConteudo) {
 		return ConteudoDAO.getConteudos(nomeConteudo);
 	}
 	public static ArrayList<Questoes> getQuestoesSemAssociacao() {
@@ -65,5 +68,14 @@ public class Controladora {
 	}
 	public static int consultarQuestaoConteudo(String codQ, String codC) {
 		return QuestoesDAO.consultarQuestaoConteudo(codQ, codC);
+	}
+	public static int consultarConteudoExiste(String nome) {
+		return ConteudoDAO.consultarConteudoExiste(nome);
+	}
+	public static void insertConteudo(String nome, String desc, String cod, String serie) {
+		ConteudoDAO.salvarNovo(nome, desc, cod, serie);	
+	}
+	public static void excluirConteudo(String cod) {
+		ConteudoDAO.excluirConteudo(cod);		
 	}
 }

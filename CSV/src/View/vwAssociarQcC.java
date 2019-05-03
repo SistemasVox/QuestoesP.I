@@ -40,6 +40,7 @@ public class vwAssociarQcC extends JFrame {
 	private JComboBox cbxDisc;
 	private ArrayList<Questoes> questoes = new ArrayList<Questoes>();
 	private ArrayList<Conteudo> conteudos = new ArrayList<Conteudo>();
+	private ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 
 	/**
 	 * Launch the application.
@@ -140,7 +141,7 @@ public class vwAssociarQcC extends JFrame {
 		lblQuesto.setBounds(10, 226, 100, 14);
 		contentPane.add(lblQuesto);
 		
-		JButton btnSubirBarraDe = new JButton("Associar");
+		JButton btnSubirBarraDe = new JButton("Associar.");
 		btnSubirBarraDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				associarQuestaoConteudo();
@@ -150,7 +151,7 @@ public class vwAssociarQcC extends JFrame {
 		btnSubirBarraDe.setBounds(554, 252, 181, 46);
 		contentPane.add(btnSubirBarraDe);
 		
-		JButton btnVerQuestesSem = new JButton("Quest\u00F5es Sem Associa\u00E7\u00E3o.");
+		JButton btnVerQuestesSem = new JButton("Quest\u00F5es Novas.");
 		btnVerQuestesSem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				preencherQuestoesNovas();
@@ -166,17 +167,27 @@ public class vwAssociarQcC extends JFrame {
 				carregarTodasQuestoes();
 			}
 		});
-		btnVerTodasQuestes.setBounds(554, 356, 181, 46);
+		btnVerTodasQuestes.setBounds(554, 415, 181, 46);
 		contentPane.add(btnVerTodasQuestes);
 		
-		JButton btnCadastrarContedo = new JButton("Cadastrar Conte\u00FAdo");
+		JButton btnCadastrarContedo = new JButton("Cadastrar Conte\u00FAdo.");
+		btnCadastrarContedo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new vwConteudo().setVisible(true);
+			}
+		});
 		btnCadastrarContedo.setToolTipText("Cadastrar Novo Conte\u00FAdo");
-		btnCadastrarContedo.setBounds(554, 409, 181, 46);
+		btnCadastrarContedo.setBounds(554, 472, 181, 46);
 		contentPane.add(btnCadastrarContedo);
 		
-		JButton button_4 = new JButton("Voltar Menu Principal.");
-		button_4.setBounds(554, 466, 181, 46);
-		contentPane.add(button_4);
+		JButton bntQE = new JButton("Quest\u00F5es Espec\u00EDficas");
+		bntQE.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				questoeEspecificas();
+			}
+		});
+		bntQE.setBounds(554, 358, 181, 46);
+		contentPane.add(bntQE);
 		
 		JButton button_5 = new JButton("Sair");
 		button_5.addActionListener(new ActionListener() {
@@ -191,12 +202,22 @@ public class vwAssociarQcC extends JFrame {
 		
 	}
 	
+	protected void questoeEspecificas() {
+		cbxQ.removeAllItems();
+		questoes.clear();
+		questoes = Controladora.getQuestoes(conteudos.get(cbxC.getSelectedIndex()).getNome());	
+		for (int i = 0; i < questoes.size(); i++) {
+			cbxQ.addItem(questoes.get(i).getCod() +") " + questoes.get(i).getEnunciado());
+		}			
+	}
+
 	protected void associarQuestaoConteudo() {
 		if (cbxQ.getItemCount() != 0) {
 			if (JOptionPane.showConfirmDialog(null, "Tem certeza que deseja associar:\n" + cbxQ.getSelectedItem().toString() + "\nAo conteúdo:\n" + cbxC.getSelectedItem().toString()) == 0) {
 				System.out.println(questoes.size());
 				if (Controladora.consultarQuestaoConteudo(questoes.get(cbxQ.getSelectedIndex()).getCod(), conteudos.get(cbxC.getSelectedIndex()).getCod()) == 0) {
 					Controladora.insertQuestaoConteudo(questoes.get(cbxQ.getSelectedIndex()).getCod(), conteudos.get(cbxC.getSelectedIndex()).getCod());
+					JOptionPane.showMessageDialog(null, cbxQ.getSelectedItem().toString() + ", associado com sucesso.");
 					textArea.setText("");
 					preencherQuestoesNovas();
 				} else {
@@ -225,7 +246,8 @@ public class vwAssociarQcC extends JFrame {
 	}
 	private void atualizarDisciplinas() {
 		cbxDisc.removeAllItems();
-		ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();		
+		disciplinas.clear();
+		disciplinas = new ArrayList<Disciplina>();		
 		try {			
 			disciplinas = Controladora.consultarDisciplinas(cbxA.getSelectedItem().toString().substring(3, cbxA.getSelectedItem().toString().length()));	
 			for (int i = 0; i < disciplinas.size(); i++) {
@@ -233,7 +255,7 @@ public class vwAssociarQcC extends JFrame {
 			}	
 		} catch (Exception e) {
 			System.out.println("Disciplina: " + e.getMessage());
-		}	
+		}
 	}
 
 	protected void atualizaArea() {
@@ -241,14 +263,13 @@ public class vwAssociarQcC extends JFrame {
 		try {
 			if (!cbxQ.getSelectedItem().toString().isEmpty()) {
 				string += cbxQ.getSelectedItem().toString() +"\n\n";
-				for (int i = 0; i <  Controladora.getAlternativas(String.valueOf(cbxQ.getSelectedIndex() + 1)).size(); i++) {
-					string += Alphabet.getLetra(i).toLowerCase() +") " +  Controladora.getAlternativas(String.valueOf(cbxQ.getSelectedIndex() + 1)).get(i).getResposta();
+				for (int i = 0; i <  Controladora.getAlternativas(String.valueOf(questoes.get(cbxQ.getSelectedIndex()).getCod())).size(); i++) {
+					string += Alphabet.getLetra(i).toLowerCase() +") " +  Controladora.getAlternativas(questoes.get(cbxQ.getSelectedIndex()).getCod()).get(i).getResposta();
 					string += "\n";
 					
 				}
-				string += "\n\nPertence a qual conteúdo?";
+				string += "\n\nDeseja associar a qual conteúdo?";
 				textArea.setText(string);
-				atualizarConteudo();
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
