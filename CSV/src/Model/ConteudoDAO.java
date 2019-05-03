@@ -11,18 +11,18 @@ import Controller.FabricaConexao;
 
 public class ConteudoDAO {
 
-	public static ArrayList<String> consultarConteudos(String nomeDisc) {
+	public static ArrayList<Conteudo> consultarConteudos(String nomeDisc) {
 		Statement stmt = null;
 		ResultSet rs = null;
-		ArrayList<String> conteudos = new ArrayList<String>();
+		ArrayList<Conteudo> conteudos = new ArrayList<Conteudo>();
 		StringBuilder sql = new StringBuilder();
 		try {
 			Connection c = FabricaConexao.conectarSQLITE();
 			stmt = c.createStatement();
-			sql.append("SELECT nome_conteudo FROM Conteudo c, Disciplina_Conteudo dc where dc.cod_disciplina = (SELECT cod_disciplina FROM Disciplina WHERE nome_disciplina = '"+nomeDisc+"') and c.cod_conteudo = dc.cod_conteudo;");
+			sql.append("SELECT * FROM Conteudo c, Disciplina_Conteudo dc where dc.cod_disciplina = (SELECT cod_disciplina FROM Disciplina WHERE nome_disciplina = '"+nomeDisc+"') and c.cod_conteudo = dc.cod_conteudo;");
 			rs = stmt.executeQuery(sql.toString());
 			while (rs.next()) {
-				conteudos.add(rs.getString(1));
+				conteudos.add(new Conteudo(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(3)));
 			}
 			c.close();
 

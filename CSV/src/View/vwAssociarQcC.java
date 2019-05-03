@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import Controller.Controladora;
 import Model.Area_Conhecimento;
+import Model.Conteudo;
 import Model.Disciplina;
 import Model.Questoes;
 import Tools.Alphabet;
@@ -37,6 +38,8 @@ public class vwAssociarQcC extends JFrame {
 	private JTextArea textArea;
 	private JComboBox cbxA;
 	private JComboBox cbxDisc;
+	private ArrayList<Questoes> questoes = new ArrayList<Questoes>();
+	private ArrayList<Conteudo> conteudos = new ArrayList<Conteudo>();
 
 	/**
 	 * Launch the application.
@@ -189,15 +192,24 @@ public class vwAssociarQcC extends JFrame {
 	}
 	
 	protected void associarQuestaoConteudo() {
-		if (JOptionPane.showConfirmDialog(null, "Tem certeza que deseja associar:\n" + cbxQ.getSelectedItem().toString() + "\nAo conteúdo:\n" + cbxC.getSelectedItem().toString()) == 0) {
-			
-			preencherQuestoesNovas();
-		}		
+		if (cbxQ.getItemCount() != 0) {
+			if (JOptionPane.showConfirmDialog(null, "Tem certeza que deseja associar:\n" + cbxQ.getSelectedItem().toString() + "\nAo conteúdo:\n" + cbxC.getSelectedItem().toString()) == 0) {
+				System.out.println(questoes.size());
+				if (Controladora.consultarQuestaoConteudo(questoes.get(cbxQ.getSelectedIndex()).getCod(), conteudos.get(cbxC.getSelectedIndex()).getCod()) == 0) {
+					Controladora.insertQuestaoConteudo(questoes.get(cbxQ.getSelectedIndex()).getCod(), conteudos.get(cbxC.getSelectedIndex()).getCod());
+					textArea.setText("");
+					preencherQuestoesNovas();
+				} else {
+					JOptionPane.showMessageDialog(null, "Questão: " + questoes.get(cbxQ.getSelectedIndex()).getEnunciado() + "\nJá pertence ao conteúdo: " +conteudos.get(cbxC.getSelectedIndex()).getNome());
+				}
+			}	
+		}
 	}
 
 	protected void preencherQuestoesNovas() {
 		cbxQ.removeAllItems();
-		ArrayList<Questoes> questoes = Controladora.getQuestoesSemAssociacao();	
+		questoes.clear();
+		questoes = Controladora.getQuestoesSemAssociacao();	
 		for (int i = 0; i < questoes.size(); i++) {
 			cbxQ.addItem(questoes.get(i).getCod() +") " + questoes.get(i).getEnunciado());
 		}				
@@ -246,11 +258,11 @@ public class vwAssociarQcC extends JFrame {
 
 	private void atualizarConteudo() {
 		cbxC.removeAllItems();
-		ArrayList<String> conteudos = new ArrayList<String>();
+		conteudos.clear();
 		try {
 			conteudos = Controladora.consultarConteudos(cbxDisc.getSelectedItem().toString().substring(3, cbxDisc.getSelectedItem().toString().length()));	
 			for (int i = 0; i < conteudos.size(); i++) {
-				cbxC.addItem((i +1 ) + ") "+ conteudos.get(i));
+				cbxC.addItem((i +1 ) + ") "+ conteudos.get(i).getNome());
 			}
 		} catch (Exception e) {
 			System.out.println("Conteúdo: " + e.getMessage());
@@ -259,7 +271,8 @@ public class vwAssociarQcC extends JFrame {
 
 	protected void carregarTodasQuestoes() {
 		cbxQ.removeAllItems();
-		ArrayList<Questoes> questoes = Controladora.getQuestoes("");	
+		questoes.clear();
+		questoes = Controladora.getQuestoes("");	
 		for (int i = 0; i < questoes.size(); i++) {
 			cbxQ.addItem(questoes.get(i).getCod() +") " + questoes.get(i).getEnunciado());
 		}

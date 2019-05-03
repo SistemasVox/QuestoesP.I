@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import Controller.Controladora;
 import Model.Alternativa;
 import Model.Area_Conhecimento;
+import Model.Conteudo;
 import Model.Disciplina;
 import Model.Questoes;
 import Tools.Alphabet;
@@ -228,11 +229,11 @@ public class vwMontaQuestao extends JFrame {
 	private void atualizarConteudo() {
 		cbxConte.removeAllItems();
 		limpaarea();
-		ArrayList<String> conteudos = new ArrayList<String>();
+		ArrayList<Conteudo> conteudos = new ArrayList<Conteudo>();
 		try {
 			conteudos = Controladora.consultarConteudos(cbxDisc.getSelectedItem().toString());	
 			for (int i = 0; i < conteudos.size(); i++) {
-				cbxConte.addItem(conteudos.get(i));
+				cbxConte.addItem(conteudos.get(i).getNome());
 			}
 		} catch (Exception e) {
 			System.out.println("Conteúdo: " + e.getMessage());

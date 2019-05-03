@@ -45,7 +45,7 @@ public class Controladora {
 	public static ArrayList<Disciplina> consultarDisciplinas(String nomeArea) {
 		return DisciplinaDAO.consultarDisciplinas(nomeArea);
 	}
-	public static ArrayList<String> consultarConteudos(String nomeDisc) {
+	public static ArrayList<Conteudo> consultarConteudos(String nomeDisc) {
 		return ConteudoDAO.consultarConteudos(nomeDisc);
 	}
 	public static String consultarTotalQ(String nomeConteudo) {
@@ -59,5 +59,11 @@ public class Controladora {
 	}
 	public static ArrayList<Questoes> getQuestoesSemAssociacao() {
 		return QuestoesDAO.getQuestoesSemAssociacao();
+	}
+	public static void insertQuestaoConteudo(String codQ, String codC) {
+		QuestoesDAO.insertQuestaoConteudo(codQ, codC);		
+	}
+	public static int consultarQuestaoConteudo(String codQ, String codC) {
+		return QuestoesDAO.consultarQuestaoConteudo(codQ, codC);
 	}
 }

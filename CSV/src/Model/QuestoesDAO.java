@@ -182,4 +182,53 @@ public class QuestoesDAO {
 		}
 		return null;
 	}
+
+	public static void insertQuestaoConteudo(String codQ, String codC) {
+		Statement stmt = null;
+		StringBuilder sql = null;
+		try {
+			Connection c = FabricaConexao.conectarSQLITE();
+			c.setAutoCommit(false);
+			stmt = c.createStatement();
+			sql = new StringBuilder();
+			sql.append("INSERT INTO Conteudo_Questao");
+			sql.append(" (cod_conteudo, cod_questao) ");
+			sql.append("VALUES ('" + codC + "', ");
+			sql.append("'" + codQ + "');");
+			stmt.executeUpdate(sql.toString());
+			stmt.close();
+			c.commit();
+			c.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,
+					"Falha em processar mensagem " + e.getClass().getName() + ": " + e.getMessage() + sql.toString());
+			System.out.println(e.getMessage());
+			System.out.println(sql.toString());
+		}		
+	}
+
+	public static int consultarQuestaoConteudo(String codQ, String codC) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder();
+		String temp = "";
+		
+		try {
+			Connection c = FabricaConexao.conectarSQLITE();
+			stmt = c.createStatement();
+			sql.append("SELECT DISTINCT COUNT(*) FROM Questoes q, Conteudo c, Conteudo_Questao cq\r\n" + 
+					"WHERE q.cod = cq.cod_questao and  cq.cod_conteudo = c.cod_conteudo and c.cod_conteudo = '"+codC+"' and q.cod = '"+codQ+"';");
+			rs = stmt.executeQuery(sql.toString());
+			while (rs.next()) {
+				temp = rs.getString(1);
+			}
+			c.close();
+			return Integer.parseInt(temp);
+		} catch (Exception e) {
+			//vwHomeLoto.mensagem(e.getClass().getName() + ": " + e.getMessage());
+			JOptionPane.showMessageDialog(null, "ERRO: Na Classe QuestoesDAO, no método consultarQuestaoConteudo();\n\n" + e.getMessage());
+			System.out.println(e.getMessage());
+		}
+		return 1;
+	}
 }
