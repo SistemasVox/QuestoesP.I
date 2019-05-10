@@ -42,9 +42,6 @@ public class vwAssociarQcC extends JFrame {
 	private ArrayList<Conteudo> conteudos = new ArrayList<Conteudo>();
 	private ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -58,9 +55,6 @@ public class vwAssociarQcC extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public vwAssociarQcC() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 754, 614);

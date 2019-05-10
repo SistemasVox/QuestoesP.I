@@ -49,10 +49,10 @@ public class vwHomePRO extends JFrame {
 		btnNewButton.setBounds(10, 55, 242, 130);
 		contentPane.add(btnNewButton);
 		
-		JButton btnMontarQuestes = new JButton("Montar Quest\u00F5es");
+		JButton btnMontarQuestes = new JButton("Gerar Avalia\u00E7\u00E3o");
 		btnMontarQuestes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vwMontaQuestao montaQuestao = new vwMontaQuestao();
+				vwGerarAvaliacao montaQuestao = new vwGerarAvaliacao();
 				montaQuestao.setVisible(true);
 			}
 		});
