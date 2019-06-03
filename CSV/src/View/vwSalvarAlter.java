@@ -145,7 +145,7 @@ public class vwSalvarAlter extends JFrame {
 
 	protected void salvar() {
 		Controladora.savarA(new Alternativa(String.valueOf(Integer.parseInt(Controladora.consultarTotalA()) + 1), String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1),
-				comboBox.getSelectedItem().toString(), listaAlternativas.get(i), txtQA.getText().toString()));
+				comboBox.getSelectedItem().toString(), listaAlternativas.get(i).replaceAll("`", "'").replaceAll("'", "''"), txtQA.getText().toString()));
 		
 	}
 	private void iniciar() {
