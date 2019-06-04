@@ -11,6 +11,10 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class vwHomePRO extends JFrame {
 
@@ -39,6 +43,7 @@ public class vwHomePRO extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Cadastar Quest\u00F5es");
+		btnNewButton.setToolTipText(" Click e cadastre novas quest\u00F5es.");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vwCadastrarQuestoes home = new vwCadastrarQuestoes();
@@ -50,6 +55,7 @@ public class vwHomePRO extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JButton btnMontarQuestes = new JButton("Gerar Avalia\u00E7\u00E3o");
+		btnMontarQuestes.setToolTipText("Click e crie novas avalia\u00E7\u00F5es");
 		btnMontarQuestes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vwGerarAvaliacao montaQuestao = new vwGerarAvaliacao();
@@ -61,12 +67,20 @@ public class vwHomePRO extends JFrame {
 		contentPane.add(btnMontarQuestes);
 		
 		JLabel lblXquest = new JLabel("X-Quest");
+		lblXquest.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				new vwAbout().setVisible(true);
+			}
+		});
+		lblXquest.setToolTipText("Click e veja mais sobre o Software.");
 		lblXquest.setHorizontalAlignment(SwingConstants.CENTER);
 		lblXquest.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 		lblXquest.setBounds(10, 0, 495, 57);
 		contentPane.add(lblXquest);
 		
 		JButton btnAsso = new JButton("Associar Quest\u00F5es");
+		btnAsso.setToolTipText("Click e associe antigas e novas quest\u00F5es aos seus respectivos conte\u00FAdos.");
 		btnAsso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new vwAssociarQcC().setVisible(true);
@@ -77,6 +91,7 @@ public class vwHomePRO extends JFrame {
 		contentPane.add(btnAsso);
 		
 		JButton btnCadastrarContedo = new JButton("Cadastrar Conte\u00FAdo");
+		btnCadastrarContedo.setToolTipText("Click e cadastre novos conte\u00FAdos a suas disciplinas.");
 		btnCadastrarContedo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new vwConteudo().setVisible(true);

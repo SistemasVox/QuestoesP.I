@@ -85,6 +85,7 @@ public class vwConteudo extends JFrame {
 		contentPane.add(lblContedos);
 		
 		cbxDisc = new JComboBox();
+		cbxDisc.setToolTipText("Escolha a disciplia que o Novo Conte\u00FAdo percente.");
 		cbxDisc.addItemListener(new ItemListener() {
 	        public void itemStateChanged(ItemEvent arg0) {
 	        	atualizarConteudo();
@@ -94,6 +95,7 @@ public class vwConteudo extends JFrame {
 		contentPane.add(cbxDisc);
 		
 		cbxC = new JComboBox();
+		cbxC.setToolTipText("Veja quais conte\u00FAdos j\u00E1 se tem a disciplina selecionada.");
 		cbxC.setBounds(81, 122, 610, 31);
 		contentPane.add(cbxC);
 		
@@ -103,12 +105,14 @@ public class vwConteudo extends JFrame {
 		contentPane.add(lblNovoContedo);
 		
 		txtConteudo = new JTextField();
+		txtConteudo.setToolTipText("Qual nome do novo Conte\u00FAdo?");
 		txtConteudo.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		txtConteudo.setBounds(166, 163, 525, 34);
 		contentPane.add(txtConteudo);
 		txtConteudo.setColumns(10);
 		
 		JButton btnSalvar = new JButton("Salvar ");
+		btnSalvar.setToolTipText("Salvar Novo Conte\u00FAdo?");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				salvarNovoConteudo();
@@ -118,6 +122,7 @@ public class vwConteudo extends JFrame {
 		contentPane.add(btnSalvar);
 		
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.setToolTipText("Excluir o conte\u00FAdo selecionado?");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				excluirConteudo();
@@ -127,6 +132,7 @@ public class vwConteudo extends JFrame {
 		contentPane.add(btnExcluir);
 		
 		JButton btnSair = new JButton("Sair");
+		btnSair.setToolTipText("Fechar janela de Cadastro de Conte\u00FAdo?");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -141,7 +147,7 @@ public class vwConteudo extends JFrame {
 		
 		textArea = new JTextArea();
 		textArea.setWrapStyleWord(true);
-		textArea.setToolTipText("Seja: claro e expec\u00EDfico, porque a alternativa referente a quest\u00E3o, est\u00E1 correta ou incorrenta.");
+		textArea.setToolTipText("Fa\u00E7a uma descri\u00E7\u00E3o bem detalhada do que o conte\u00FAdo se trata.");
 		textArea.setText("");
 		textArea.setLineWrap(true);
 		textArea.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 16));
@@ -158,6 +164,7 @@ public class vwConteudo extends JFrame {
 		contentPane.add(lblSrie);
 		
 		cbxSerie = new JComboBox();
+		cbxSerie.setToolTipText("Qual s\u00E9rie o Novo Conte\u00FAdo Pertence?");
 		cbxSerie.setModel(new DefaultComboBoxModel(new String[] {"", "1", "2", "3"}));
 		cbxSerie.setBounds(644, 206, 47, 20);
 		contentPane.add(cbxSerie);

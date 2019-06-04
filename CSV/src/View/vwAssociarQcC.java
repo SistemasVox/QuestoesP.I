@@ -75,6 +75,7 @@ public class vwAssociarQcC extends JFrame {
 		scrollPane.setViewportView(textArea);
 		
 		cbxQ = new JComboBox();
+		cbxQ.setToolTipText("Selecione a Quest\u00E3o desejada.");
 		cbxQ.addItemListener(new ItemListener() {
 	        public void itemStateChanged(ItemEvent arg0) {
 	        	try {
@@ -92,6 +93,7 @@ public class vwAssociarQcC extends JFrame {
 		contentPane.add(lblXquestAssociarQuestes);
 		
 		cbxA = new JComboBox();
+		cbxA.setToolTipText("Selecione a \u00C1rea do Conhecimento desejada.");
 		cbxA.addItemListener(new ItemListener() {
 	        public void itemStateChanged(ItemEvent arg0) {
 	        	atualizarDisciplinas();
@@ -107,6 +109,7 @@ public class vwAssociarQcC extends JFrame {
 		contentPane.add(label);
 		
 		cbxDisc = new JComboBox();
+		cbxDisc.setToolTipText("Selecione a Disciplina desejada.");
 		cbxDisc.addItemListener(new ItemListener() {
 	        public void itemStateChanged(ItemEvent arg0) {
 	        	atualizarConteudo();
@@ -121,6 +124,7 @@ public class vwAssociarQcC extends JFrame {
 		contentPane.add(lblDisciplina);
 		
 		cbxC = new JComboBox();
+		cbxC.setToolTipText("Selecione o Conte\u00FAdo desejado.");
 		cbxC.setBounds(91, 176, 644, 31);
 		contentPane.add(cbxC);
 		
@@ -141,7 +145,7 @@ public class vwAssociarQcC extends JFrame {
 				associarQuestaoConteudo();
 			}
 		});
-		btnSubirBarraDe.setToolTipText("Associar a quest\u00E3o, com o Conte\u00FAdo.");
+		btnSubirBarraDe.setToolTipText("Associar a quest\u00E3o, com o Conte\u00FAdo?");
 		btnSubirBarraDe.setBounds(554, 252, 181, 46);
 		contentPane.add(btnSubirBarraDe);
 		
@@ -151,11 +155,12 @@ public class vwAssociarQcC extends JFrame {
 				preencherQuestoesNovas();
 			}
 		});
-		btnVerQuestesSem.setToolTipText("Quest\u00F5es Sem Associa\u00E7\u00E3o.");
+		btnVerQuestesSem.setToolTipText("Ver novas Quest\u00F5es sem Associa\u00E7\u00E3o.");
 		btnVerQuestesSem.setBounds(554, 304, 181, 46);
 		contentPane.add(btnVerQuestesSem);
 		
 		JButton btnVerTodasQuestes = new JButton("Ver Todas Quest\u00F5es.");
+		btnVerTodasQuestes.setToolTipText("Ver todas as Quest\u00F5es contidas no banco de dados.");
 		btnVerTodasQuestes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				carregarTodasQuestoes();
@@ -170,11 +175,12 @@ public class vwAssociarQcC extends JFrame {
 				new vwConteudo().setVisible(true);
 			}
 		});
-		btnCadastrarContedo.setToolTipText("Cadastrar Novo Conte\u00FAdo");
+		btnCadastrarContedo.setToolTipText("Cadastrar Novo Conte\u00FAdo?");
 		btnCadastrarContedo.setBounds(554, 472, 181, 46);
 		contentPane.add(btnCadastrarContedo);
 		
 		JButton bntQE = new JButton("Quest\u00F5es Espec\u00EDficas");
+		bntQE.setToolTipText("Ver Quest\u00F5es Espec\u00EDficas ao conte\u00FAdo selecionado.");
 		bntQE.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				questoeEspecificas();
@@ -184,6 +190,7 @@ public class vwAssociarQcC extends JFrame {
 		contentPane.add(bntQE);
 		
 		JButton button_5 = new JButton("Sair");
+		button_5.setToolTipText("Fechar janela de Associar Quest\u00F5es com Conte\u00FAdo.");
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

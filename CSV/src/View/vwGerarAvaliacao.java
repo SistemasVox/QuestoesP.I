@@ -85,13 +85,14 @@ public class vwGerarAvaliacao extends JFrame {
 		txtArea = new JTextArea();
 		txtArea.setLineWrap(true);
 		txtArea.setWrapStyleWord(true);
-		txtArea.setToolTipText("Quest\u00E3o Montada.");
+		txtArea.setToolTipText("\u00C1rea que as quest\u00F5es ser\u00E3o exibidas.");
 		txtArea.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
 
 		contentPane.add(this.scrollArea = new JScrollPane(txtArea));
 		scrollArea.setBounds(10, 144, 713, 317);
 
 		btnDetalhes = new JButton("Ver Quest\u00F5es Detalhada.");
+		btnDetalhes.setToolTipText("Ver quest\u00F5es espec\u00EDficas, escolhidas no campos de conte\u00FAdo, de forma detalhada.");
 		btnDetalhes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				verQuestoesDetalhes();				
@@ -111,6 +112,7 @@ public class vwGerarAvaliacao extends JFrame {
 		contentPane.add(btnTop);
 
 		bntMontar = new JButton("Ver Quest\u00F5es.");
+		bntMontar.setToolTipText("Ver quest\u00F5es espec\u00EDficas, escolhidas no campos de conte\u00FAdo.");
 		bntMontar.setBounds(739, 196, 181, 46);
 		bntMontar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -120,6 +122,7 @@ public class vwGerarAvaliacao extends JFrame {
 		contentPane.add(bntMontar);
 
 		JButton btnPDF = new JButton("Exportar para PDF.");
+		btnPDF.setToolTipText("Exportar avalia\u00E7\u00E3o para PDF.");
 		btnPDF.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				exportarPDF();
@@ -129,6 +132,7 @@ public class vwGerarAvaliacao extends JFrame {
 		contentPane.add(btnPDF);
 
 		JButton btnExpor = new JButton("Voltar Menu Principal.");
+		btnExpor.setToolTipText("Voltar ao Menu Principal.");
 		btnExpor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();				
@@ -138,6 +142,7 @@ public class vwGerarAvaliacao extends JFrame {
 		contentPane.add(btnExpor);
 
 		btnSair = new JButton("Sair");
+		btnSair.setToolTipText("Fechar janela de Gerar Avalia\u00E7\u00E3o.");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -152,6 +157,7 @@ public class vwGerarAvaliacao extends JFrame {
 		contentPane.add(lvlAreConhe);
 		
 		cbxA = new JComboBox();
+		cbxA.setToolTipText("Selecione a \u00E1rea do conhecimento desejada.");
 		cbxA.addItemListener(new ItemListener() {
 	        public void itemStateChanged(ItemEvent arg0) {
 	        	atualizarDisciplinas();
@@ -166,6 +172,7 @@ public class vwGerarAvaliacao extends JFrame {
 		contentPane.add(lblDisc);
 		
 		cbxDisc = new JComboBox();
+		cbxDisc.setToolTipText("Selecione a Disciplina desejada.");
 		cbxDisc.addItemListener(new ItemListener() {
 	        public void itemStateChanged(ItemEvent arg0) {
 	        	atualizarConteudo();
@@ -180,6 +187,7 @@ public class vwGerarAvaliacao extends JFrame {
 		contentPane.add(lblConteudo);
 		
 		cbxConte = new JComboBox();
+		cbxConte.setToolTipText("Selecione o conte\u00FAdo desejado.");
 		cbxConte.addItemListener(new ItemListener() {
 	        public void itemStateChanged(ItemEvent arg0) {
 	        	limpaarea();
@@ -189,29 +197,34 @@ public class vwGerarAvaliacao extends JFrame {
 		contentPane.add(cbxConte);
 		
 		JLabel lblAlternativas = new JLabel("Alternativas:");
+		lblAlternativas.setToolTipText("Escolha o tipo de forma\u00E7\u00E3o das alternativas desejada.");
 		lblAlternativas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAlternativas.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblAlternativas.setBounds(620, 91, 100, 14);
 		contentPane.add(lblAlternativas);
 		
 		rbMai = new JRadioButton("Mai\u00FAsculas");
+		rbMai.setToolTipText("Escolha o tipo de forma\u00E7\u00E3o das alternativas desejada.");
 		letras.add(rbMai);
 		rbMai.setSelected(true);
 		rbMai.setBounds(719, 88, 100, 23);
 		contentPane.add(rbMai);
 		
 		rbMin = new JRadioButton("Min\u00FAsculas");
+		rbMin.setToolTipText("Escolha o tipo de forma\u00E7\u00E3o das alternativas desejada.");
 		letras.add(rbMin);
 		rbMin.setBounds(821, 88, 100, 23);
 		contentPane.add(rbMin);
 		
 		rbPare = new JRadioButton("Parenteses");
+		rbPare.setToolTipText("Escolha o tipo de forma\u00E7\u00E3o das alternativas desejada.");
 		formatacao.add(rbPare);
 		rbPare.setSelected(true);
 		rbPare.setBounds(718, 114, 100, 23);
 		contentPane.add(rbPare);
 		
 		rbPf = new JRadioButton("Ponto final");
+		rbPf.setToolTipText("Escolha o tipo de forma\u00E7\u00E3o das alternativas desejada.");
 		formatacao.add(rbPf);
 		rbPf.setBounds(820, 114, 100, 23);
 		contentPane.add(rbPf);

@@ -67,11 +67,13 @@ public class vwCadastrarQuestoes extends JFrame {
 		contentPane.setLayout(null);
 
 		lblQ = new JLabel("Q:");
+		lblQ.setToolTipText("Quantidade de Quest\u00F5es no Banco de Dados.");
 		lblQ.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblQ.setBounds(851, 19, 63, 14);
 		contentPane.add(lblQ);
 
 		lblA = new JLabel("A:");
+		lblA.setToolTipText("Quantidade de Alternativas contidas no Banco de Dados.");
 		lblA.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblA.setBounds(851, 43, 63, 14);
 		contentPane.add(lblA);
@@ -93,6 +95,7 @@ public class vwCadastrarQuestoes extends JFrame {
 		scrollArea.setBounds(10, 337, 713, 354);
 
 		btnSalvar = new JButton("Salvar Quest\u00E3o");
+		btnSalvar.setToolTipText("Salve a nova quest\u00E3o no Banco de Dados.");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				salvar();
@@ -102,6 +105,7 @@ public class vwCadastrarQuestoes extends JFrame {
 		contentPane.add(btnSalvar);
 
 		btnLimpar = new JButton("Limpar Campos");
+		btnLimpar.setToolTipText("Limpe toda a \u00E1rea e recomece novamente.");
 		btnLimpar.setBounds(735, 360, 159, 46);
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -141,6 +145,7 @@ public class vwCadastrarQuestoes extends JFrame {
 		scrollA.setBounds(10, 150, 907, 165);
 
 		bntMontar = new JButton("Montar Quest\u00E3o");
+		bntMontar.setToolTipText("Click e veja a quest\u00E3o como ficaria criada.");
 		bntMontar.setBounds(735, 412, 159, 46);
 		bntMontar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -150,6 +155,7 @@ public class vwCadastrarQuestoes extends JFrame {
 		contentPane.add(bntMontar);
 
 		JButton btnListar = new JButton("Listar Tudo.");
+		btnListar.setToolTipText("Liste todas as quest\u00F5es e suas alternativas contidas no Banco de Dados.");
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				listarQuestoes();
@@ -159,6 +165,7 @@ public class vwCadastrarQuestoes extends JFrame {
 		contentPane.add(btnListar);
 
 		JButton btnExpor = new JButton("Exportar CSV");
+		btnExpor.setToolTipText("Exporte todas as quest\u00F5es e suas alternativas para CSV.");
 		btnExpor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vwExport export = new vwExport();
@@ -169,6 +176,7 @@ public class vwCadastrarQuestoes extends JFrame {
 		contentPane.add(btnExpor);
 
 		btnSair = new JButton("Sair");
+		btnSair.setToolTipText("Fechar a janela de Cadastro de Quest\u00F5es.");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

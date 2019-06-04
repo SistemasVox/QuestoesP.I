@@ -109,6 +109,7 @@ public class vwSalvarAlter extends JFrame {
 		contentPane.add(cbxDifi);
 		
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setToolTipText("Salvar alternativa atual.");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (comboBox.getSelectedItem().toString().isEmpty()) {
