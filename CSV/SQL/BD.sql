@@ -2,37 +2,43 @@ DROP database IF exists `questoes`;
 CREATE DATABASE questoes;
 USE questoes;
 
-CREATE TABLE questoes (
-    cod BIGINT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE Questoes (
+    cod INT AUTO_INCREMENT PRIMARY KEY,
     enunciado TEXT,
-  dificuldade TEXT,
+    dificuldade TEXT,
     referencia TEXT
 );
 
 CREATE TABLE alternativa (
-    cod BIGINT AUTO_INCREMENT PRIMARY KEY,
-    cod_q BIGINT,
+    cod INT AUTO_INCREMENT PRIMARY KEY,
+    cod_q INT,
     classificacao SMALLINT DEFAULT 0,
     resposta TEXT,
-	justificativa TEXT,
+    justificativa TEXT,
     FOREIGN KEY (cod_q)
         REFERENCES Questoes (cod)
 );
 
 
 CREATE TABLE area_conhecimento (
-  cod_area AUTO_INCREMENT PRIMARY KEY, 
+  cod_area INT AUTO_INCREMENT PRIMARY KEY, 
   nome_area text
 );
 
 CREATE TABLE disciplina (
-  cod_disciplina AUTO_INCREMENT PRIMARY KEY, 
+  cod_disciplina INT AUTO_INCREMENT PRIMARY KEY, 
   nome_disciplina text,
   descricao_disciplina text,
   cod_area int,
   FOREIGN KEY (cod_area) REFERENCES Area_conhecimento (cod_area) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE Conteudo (
+  cod_conteudo INT AUTO_INCREMENT PRIMARY KEY, 
+  nome_conteudo text,
+  descricao_conteudo text,
+  disciplina_auxiliar text
+);
 
 CREATE TABLE disciplina_conteudo (
   Serie int,
@@ -46,7 +52,7 @@ CREATE TABLE conteudo_questao (
   cod_conteudo int,
   cod_questao int,
   FOREIGN KEY (cod_conteudo) REFERENCES Conteudo (cod_conteudo),
-  FOREIGN KEY (cod_questao) REFERENCES Questao (cod_questao)
+  FOREIGN KEY (cod_questao) REFERENCES Questoes (cod)
 );
 
 -- SQLLite --

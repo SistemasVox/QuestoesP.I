@@ -405,16 +405,16 @@ public class vwCadastrarQuestoes extends JFrame {
 		String[] alternativas;
 		listaAlternativas.clear();
 		String s = "";
-		int t = 0;
+		int letra = 0;
 		
 		alternativas = textoAlternativa.split(Pattern.quote("\n"));
 		
 		if (alternativas.length <= alfabeto) {
 			for (int i = 0; i < alternativas.length; i++) {
 				if (alternativas[i].length() > 1) {
-					s += ("\n" + az(t) +") " + tratarA(alternativas[i]));
+					s += ("\n" + az(letra) +") " + tratarA(alternativas[i]));
 					listaAlternativas.add(tratarA(alternativas[i]));
-					t++;
+					letra++;
 				}
 			}
 		} else {
@@ -423,7 +423,7 @@ public class vwCadastrarQuestoes extends JFrame {
 		return s;
 	}
 
-	public static String az(int i) {
+	public String az(int i) {
 		char s = 'a';
 		
 		for (int j = 0; j < i; j++) {
@@ -432,7 +432,7 @@ public class vwCadastrarQuestoes extends JFrame {
 		return "" +  Character.toUpperCase(s);
 	}
 
-	private String tratarA(String txt) {
+	public String tratarA(String txt) {
 		eliminar();		
 		for (int i = 0; i < (alfabeto - 1) ; i++) {
 			if (txt.length() > 2) {
