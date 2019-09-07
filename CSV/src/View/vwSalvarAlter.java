@@ -33,6 +33,7 @@ public class vwSalvarAlter extends JFrame {
 	
 	private String Enunciado;
 	private ArrayList<String> listaAlternativas;
+	private ArrayList<Alternativa> listaAlternativaPreenchida = new ArrayList<Alternativa>();
 	@SuppressWarnings("rawtypes")
 	private JComboBox comboBox, cbxDifi;
 	 vwCadastrarQuestoes vwHome;
@@ -97,7 +98,7 @@ public class vwSalvarAlter extends JFrame {
 		comboBox.setToolTipText("Selecione, quanto distante essa alternativa est\u00E1 incorreta referente a alterativa correta, se for a correta, selecione '0'.");
 		comboBox.setFont(new Font("Tahoma", Font.BOLD, 14));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
-		comboBox.setBounds(492, 465, 73, 20);
+		comboBox.setBounds(393, 464, 73, 20);
 		contentPane.add(comboBox);
 		
 		cbxDifi = new JComboBox();
@@ -118,7 +119,9 @@ public class vwSalvarAlter extends JFrame {
 					JOptionPane.showMessageDialog(null, "Selecione o nível de dificuldade da Questão.");
 				}else {
 					cbxDifi.setEnabled(false);
-					salvar();
+					
+					listaAlternativaPreenchida.add(new Alternativa(String.valueOf(Integer.parseInt(Controladora.consultarTotalA()) + 1 + i), String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1),
+							comboBox.getSelectedItem().toString(), listaAlternativas.get(i).replaceAll("`", "'").replaceAll("'", "''"), txtQA.getText().toString()));
 					i++;
 					iniciar();
 				}
@@ -126,33 +129,45 @@ public class vwSalvarAlter extends JFrame {
 				
 			}
 		});
-		btnSalvar.setBounds(575, 465, 89, 23);
+		btnSalvar.setBounds(476, 464, 89, 23);
 		contentPane.add(btnSalvar);
 		
 
 		
 		JLabel lblDistanciamentoDaAlternativa = new JLabel("Distanciamento da alternativa correta:");
 		lblDistanciamentoDaAlternativa.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDistanciamentoDaAlternativa.setBounds(211, 463, 271, 23);
+		lblDistanciamentoDaAlternativa.setBounds(112, 462, 271, 23);
 		contentPane.add(lblDistanciamentoDaAlternativa);
 		
 		JLabel lblQ = new JLabel("N\u00EDvel de Dificuldade:");
 		lblQ.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblQ.setBounds(346, 247, 146, 23);
 		contentPane.add(lblQ);		
+		
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		btnSair.setToolTipText("Cancelar cadastro das Alternativas.");
+		btnSair.setBounds(575, 465, 89, 23);
+		contentPane.add(btnSair);
 		iniciar();
 		
 	}
 
 	protected void salvar() {
-		Controladora.savarA(new Alternativa(String.valueOf(Integer.parseInt(Controladora.consultarTotalA()) + 1), String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1),
-				comboBox.getSelectedItem().toString(), listaAlternativas.get(i).replaceAll("`", "'").replaceAll("'", "''"), txtQA.getText().toString()));
+		for (int i = 0; i < listaAlternativaPreenchida.size(); i++) {
+			Controladora.savarA(listaAlternativaPreenchida.get(i));
+		}
 		
 	}
 	private void iniciar() {
 		comboBox.setSelectedIndex(0);
 		txtQA.setText("");
 		if (i == listaAlternativas.size()) {
+			
 			if (JOptionPane.showConfirmDialog(null, "Essa Questão Possui Referência?") == 0) {
 				Controladora.savarQ(new Questoes((String.valueOf(Integer.parseInt(Controladora.consultarTotalQ()) + 1)),
 						Enunciado, cbxDifi.getSelectedItem().toString(), JOptionPane.showInputDialog("Qual seria?")));
@@ -161,11 +176,12 @@ public class vwSalvarAlter extends JFrame {
 						Enunciado, cbxDifi.getSelectedItem().toString(), "Referência Vazia."));
 				
 			}
+			salvar();
 			dispose();
 			vwHome.salvarSucesso();
 			
 		}else {
-			txtQ.setText(Enunciado + "\n\n" + vwHome.az(i) +") " +listaAlternativas.get(i));	
+			txtQ.setText(Enunciado + "\n\n" + vwHome.az(i) +") " + listaAlternativas.get(i));	
 		}
 	}
 }
